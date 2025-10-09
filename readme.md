@@ -64,7 +64,7 @@
 Склонируйте репозиторий проекта и перейдите в его папку:
 
 ```bash
-    git clone https://github.com/Kirillex22/cinerate-api.git
+    git clone https://github.com/Kirillex22/cinerate.git
     cd cinerate-api
 ```
 
