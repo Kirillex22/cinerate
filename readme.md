@@ -65,7 +65,7 @@
 
 ```bash
     git clone https://github.com/Kirillex22/cinerate.git
-    cd cinerate-api
+    cd cinerate
 ```
 
 ### Шаг 2.
