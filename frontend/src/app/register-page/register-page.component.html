@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="dialog-container">
+    <div class="dialog-title">Регистрация</div>
+    <form (ngSubmit)="onRegister()">
+      <div class="input-label">Логин</div>
+      <input class="custom-input" [(ngModel)]="login" name="login" required autocomplete="username">
+      <div class="input-label" style="margin-top:16px;">Почта</div>
+      <input class="custom-input" [(ngModel)]="email" name="email" required autocomplete="email">
+      <div class="input-label" style="margin-top:16px;">Пароль</div>
+      <input class="custom-input" [(ngModel)]="password" name="password" type="password" required autocomplete="new-password">
+      <div class="input-label" style="margin-top:16px;">Подтверждение пароля</div>
+      <input class="custom-input" [(ngModel)]="confirmPassword" name="confirmPassword" type="password" required autocomplete="new-password">
+      <div *ngIf="error" class="error-msg">{{ error }}</div>
+      <div class="action-buttons">
+        <button type="submit" [disabled]="loading">Создать аккаунт</button>
+      </div>
+    </form>
+  </div>
+</div> 

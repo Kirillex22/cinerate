@@ -1,0 +1,67 @@
+<div *ngIf="profile" class="profile-container">
+  <div class="profile-header-with-search">
+    <div class="profile-header">
+      <img [src]="profile.avatar" alt="avatar" class="profile-avatar" />
+      <div class="profile-info">
+        <h2>{{ profile.username }}</h2>
+        <div class="profile-stats">
+          <span>Кол-во подписчиков: {{ subscribers.length }}</span>
+          <span>Кол-во плейлистов: {{ playlists.length }}</span>
+        </div>
+        <div class="profile-details">
+          <div *ngIf="profile.birth_date" class="profile-detail">
+            <p>Год рождения: {{ profile.birth_date | date:'yyyy' }}</p>
+          </div>
+          <div *ngIf="profile.location" class="profile-detail">
+            <p>Место проживания: {{ profile.location }}</p>
+          </div>
+          <div *ngIf="profile.bio" class="profile-detail">
+            <p>Описание профиля: {{ profile.bio }}</p>
+          </div>
+        </div>
+        <div *ngIf="profile && showSubscribeBtn" class="profile-subscribe">
+          <button *ngIf="!isSubscribed" (click)="onSubscribe(profile.userid)" class="subscribe-btn">Подписаться</button>
+          <button *ngIf="isSubscribed" (click)="onUnsubscribe(profile.userid)" class="unsubscribe-btn">Отписаться</button>
+        </div>
+        <div class="profile-actions">
+          <button class="btn" (click)="navigateToSubscribers(profile.userid)">Посмотреть подписчиков</button>
+          <button class="btn" (click)="navigateToSubscriptions(profile.userid)">Посмотреть подписки</button>
+          <button *ngIf="isOwnProfile" class="btn" (click)="openEditProfileDialog()">Изменить данные профиля</button>
+          <button *ngIf="isOwnProfile" class="btn" (click)="logout()">Выйти</button>
+        </div>
+      </div>
+    </div>
+    <div class="profile-search-block">
+      <div class="search-users-container">
+        <input [(ngModel)]="searchQuery" (keyup.enter)="searchUsers()" placeholder="Поиск пользователей..." class="search-users-input">
+        <button (click)="searchUsers()" [disabled]="searchLoading" class="search-users-btn">Поиск</button>
+        <button *ngIf="searchQuery || searchResults.length" (click)="clearSearch()" class="clear-search-btn">✖</button>
+      </div>
+      <div *ngIf="searchLoading" class="loading-text">Поиск...</div>
+      <div *ngIf="searchError" class="error-msg">{{ searchError }}</div>
+      <div class="search-users-results">
+        <div class="user-card" *ngFor="let user of searchResults" (click)="navigateToProfile(user.userid)">
+          <img [src]="user.avatar" class="avatar" [alt]="user.username">
+          <span class="username">{{ user.username }}</span>
+        </div>
+        <div *ngIf="!searchLoading && searchResults.length === 0 && searchQuery" class="no-results">Пользователи не найдены</div>
+      </div>
+    </div>
+  </div>
+  <div class="profile-playlists">
+    <h3>Публичные плейлисты</h3>
+    <div class="playlists-list">
+      <div *ngFor="let pl of playlists; let i = index;" class="playlist-card" (click)="navigateToPlaylist(pl.playlistid)">
+        <div class="playlist-poster"
+          [style.background]="playlistGradients[i]"
+          role="img">
+        </div>
+        <div class="playlist-info">
+          <div class="playlist-title">{{ pl.name }}</div>
+        </div>
+      </div>
+      <div *ngIf="playlists.length === 0" class="no-playlists">Нет публичных плейлистов</div>
+    </div>
+  </div>
+</div>
+<app-update-user-profile-dialog *ngIf="dialogOpen" [profile]="profile" (close)="onDialogClose($event)"></app-update-user-profile-dialog>

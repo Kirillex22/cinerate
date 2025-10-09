@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="dialog-container">
+    <div class="dialog-title">Вход</div>
+    <form (ngSubmit)="onLogin()">
+      <div class="input-label">Логин</div>
+      <input class="custom-input" [(ngModel)]="login" name="login" required autocomplete="username">
+      <div class="input-label" style="margin-top:16px;">Пароль</div>
+      <input class="custom-input" [(ngModel)]="password" name="password" type="password" required autocomplete="current-password">
+      <div *ngIf="error" class="error-msg">{{ error }}</div>
+      <div class="action-buttons">
+        <button type="submit" [disabled]="loading">Войти</button>
+        <button type="button" (click)="goToRegister()">Зарегистрировать аккаунт</button>
+      </div>
+    </form>
+  </div>
+</div> 

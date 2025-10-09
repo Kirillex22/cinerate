@@ -1,0 +1,118 @@
+<h1>Поиск</h1>
+<div class="search-container">
+  <div class="search-layout">
+    <div class="search-bar">
+      <div class="range">
+        <label>Название фильма:</label>
+        <input [(ngModel)]="searchParams.name" placeholder="Название фильма" />
+      </div>
+      <div *ngIf="!isExternal" class="range">
+        <label>Человек:</label>
+        <input [(ngModel)]="searchParams.person" placeholder="Человек" />
+      </div>
+
+      <!-- Жанры -->
+      <div class="genres">
+        <label>Жанр:</label>
+        <input [(ngModel)]="genreInput" list="genres-list" placeholder="Жанр" (keyup.enter)="addGenre()" />
+        <datalist id="genres-list">
+          <option *ngFor="let g of genresList" [value]="g"></option>
+        </datalist>
+        <button (click)="addGenre()">+</button>
+        <span class="genre-chip" *ngFor="let genre of searchParams.genres">
+          {{ genre }} <button (click)="removeGenre(genre)">x</button>
+        </span>
+      </div>
+
+      <!-- Год -->
+      <div class="range">
+        <label>Год:</label>
+        <input type="number" [(ngModel)]="searchParams.year.lower" placeholder="от" min="1900" max="2100" />
+        <input type="number" [(ngModel)]="searchParams.year.upper" placeholder="до" min="1900" max="2100" />
+      </div>
+
+      <!-- Рейтинг -->
+      <div *ngIf="!isExternal" class="range">
+        <label>KP рейтинг:</label>
+        <input type="number" [(ngModel)]="searchParams.kp_rating.lower" placeholder="от" min="0" max="10" />
+        <input type="number" [(ngModel)]="searchParams.kp_rating.upper" placeholder="до" min="0" max="10" />
+      </div>
+
+      <!-- Длительность -->
+      <div *class="range">
+        <label>Длительность (мин):</label>
+        <input type="number" [(ngModel)]="searchParams.length.lower" placeholder="от" min="0" />
+        <input type="number" [(ngModel)]="searchParams.length.upper" placeholder="до" min="0" />
+      </div>
+
+      <!-- Возрастной рейтинг -->
+      <div class="range">
+        <label>Воз. рейтинг:</label>
+        <input type="number" [(ngModel)]="searchParams.age_rating.lower" placeholder="от" min="0" max="18" />
+        <input type="number" [(ngModel)]="searchParams.age_rating.upper" placeholder="до" min="0" max="18" />
+      </div>
+
+      <!-- Сериал/фильм -->
+      <select [(ngModel)]="searchParams.is_series">
+        <option [ngValue]="undefined">Сериал или фильм</option>
+        <option [ngValue]="true">Сериал</option>
+        <option [ngValue]="false">Фильм</option>
+      </select>
+
+      <!-- Внешний/локальный поиск -->
+      <label>
+        <input type="checkbox" [(ngModel)]="isExternal" /> Внешний поиск
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="isFireShow" /> Показывать добавленные
+      </label>
+
+      <button (click)="search()">Найти</button>
+    </div>
+
+    <div *ngIf="dialogVisible" class="custom-dialog-backdrop">
+      <div class="custom-dialog">
+        <h2>Выберите сезон</h2>
+        <div class="season-buttons">
+          <button *ngFor="let season of dialogSeasons" (click)="onSelectSeason(season)">
+            {{ season }}
+          </button>
+        </div>
+        <button class="add-all-btn" (click)="onAddAllSeasons()">Добавить все сезоны</button>
+        <button class="close-btn" (click)="onDialogClose()">Закрыть</button>
+      </div>
+    </div>
+
+    <div class="films-grid" *ngIf="!errorMsg && films.length > 0">
+      <div class="film-card"
+           [class.already-added]="film.already_added && isFireShow"
+           *ngFor="let film of films; trackBy: trackByFilmId"
+           (click)="onFilmPosterClick(film)"
+           (mouseenter)="showFilmInfo(film)"
+           (mouseleave)="hideFilmInfo()">
+        <img [src]="film.poster_link" [alt]="film.name" class="film-poster" />
+        <div class="film-info" *ngIf="hoveredFilm === film">
+          <h3>{{ film.name }}</h3>
+          <p *ngIf="film.alternative_name" class="alternative-name">{{ film.alternative_name }}</p>
+          <p>Год: {{ film.release_year }}</p>
+          <p>Страна: {{ film.countries?.join(', ') }}</p>
+          <ng-container *ngIf="film.time_minutes !== null">
+            <p>Продолжительность: {{ film.time_minutes }} мин.</p>
+            <p class="type-label">Фильм</p>
+          </ng-container>
+          <ng-container *ngIf="film.time_minutes === null">
+            <p>Сезон: {{ film.season }}</p>
+            <p class="type-label">Сериал</p>
+          </ng-container>
+          <p>Жанры: {{ film.genres?.join(', ') }}</p>
+          <p>Режиссёр: {{ film.director }}</p>
+          <p>Возрастной рейтинг: {{ film.age_rating }}+</p>
+          <p>{{ film.is_watched ? 'Просмотрено' : 'Не просмотрено' }}</p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!errorMsg && films.length === 0" class="no-results">Нет результатов 🥵🙈</div>
+    <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}☠</div>
+  </div>
+</div>

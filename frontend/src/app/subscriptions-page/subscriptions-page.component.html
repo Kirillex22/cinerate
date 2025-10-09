@@ -1,0 +1,17 @@
+<div *ngIf="loading" class="profile-loading">Загрузка...</div>
+<div *ngIf="!loading">
+  <h2>Подписки</h2>
+
+  <div *ngIf="error && !loading" class="error-fullpage">
+    Подписки не найдены 😁
+  </div>
+
+  <div class="user-cards">
+    <div *ngFor="let user of subscriptions" class="user-card" (click)="navigateToProfile(user.userid)">
+      <div class="avatar-wrapper">
+        <img [src]="user.avatar" alt="avatar" class="avatar">
+        <div class="nickname-popup">{{user.username}}</div>
+      </div>
+    </div>
+  </div>
+</div>

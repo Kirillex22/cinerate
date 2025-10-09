@@ -1,0 +1,323 @@
+.profile-container {
+    color: #fff;
+    background: #111;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 900px;
+    margin: 32px auto;
+    box-shadow: 0 4px 32px #000a;
+  }
+  .profile-header {
+    display: flex;
+    width: 60%;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  .profile-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 16px;
+    object-fit: cover;
+    box-shadow: 0 2px 16px #0008;
+    background: #222;
+  }
+  .profile-info {
+    flex: 1;
+  }
+  .profile-info h2 {
+    margin: 0 0 8px 0;
+    font-weight: 700;
+  }
+  .profile-stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 12px;
+  }
+  .profile-details {
+    margin-bottom: 2px;
+  }
+  .profile-detail {
+    display: flex;
+    align-items: center;
+  }
+
+  .profile-subscribe {
+    margin: 12px 0;
+  }
+  .subscribe-btn, .unsubscribe-btn {
+    background: #fff;
+    color: #111;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .unsubscribe-btn {
+    background: #222;
+    color: #fff;
+    border: 1px solid #fff;
+  }
+  .subscribe-btn:hover {
+    background: #ffd600;
+    color: #111;
+  }
+  .unsubscribe-btn:hover {
+    background: #fff;
+    color: #111;
+  }
+  .profile-followers {
+    margin-top: 8px;
+    color: #bbb;
+  }
+  .profile-playlists {
+    margin-top: 36px;
+  }
+  .playlists-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .playlist-card {
+    background: #222;
+    border-radius: 12px;
+    width: 150px;
+    min-height: 200px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: 0 2px 8px #0006;
+    margin-bottom: 12px;
+  }
+
+  .playlist-poster {
+    width: 150px;
+    height: 200px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    background-size: cover;
+    background-position: center;
+  }
+  .playlist-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .playlist-desc {
+    color: #bbb;
+  }
+  .no-playlists {
+    color: #888;
+    margin-top: 16px;
+  }
+  .profile-loading {
+    color: #fff;
+    text-align: center;
+    margin-top: 80px;
+  }
+
+  .profile-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .btn {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn:hover {
+    background: #1565c0;
+  }
+
+  .user-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .user-card {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s;
+    background: #fff;
+  }
+  .user-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.16);
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  .nickname-popup {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    padding: 6px 0;
+    font-size: 15px;
+    pointer-events: none;
+  }
+  .user-card:hover .nickname-popup {
+    opacity: 1;
+  }
+
+  .profile-header-with-search {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .profile-search-block {
+    max-width: 340px;
+    min-width: 240px;
+    width: 100%;
+    margin-left: 24px;
+    box-sizing: border-box;
+  }
+  
+  .search-users-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+  
+  .search-users-input {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 220px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #181818;
+    color: #fff;
+    font-size: 1rem;
+  }
+  .search-users-input:focus {
+    border: 1.5px solid #2196f3;
+    outline: none;
+  }
+  
+  .search-users-btn, .clear-search-btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #2196f3;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .search-users-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .clear-search-btn {
+    background: #f44336;
+    margin-left: 0;
+  }
+  .clear-search-btn:hover {
+    background: #d32f2f;
+  }
+  
+  .search-users-results {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 2px;
+    max-height: 340px;
+  }
+  
+  .user-card {
+    display: flex;
+    align-items: center;
+    background: #181818;
+    border-radius: 10px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: box-shadow 0.18s, background 0.18s;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(33,150,243,0.02);
+    min-width: 300px;
+    max-height: 50px;
+  }
+  .user-card:hover {
+    background: #222;
+    box-shadow: 0 2px 12px 0 rgba(33,150,243,0.12);
+  }
+  
+  .user-card .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2196f3;
+    background: #fff;
+    flex-shrink: 0;
+  }
+  
+  .user-card .username {
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+  }
+  
+  .no-results {
+    color: #bbb;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 1.05rem;
+  }
+  .loading-text {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #bbb;
+  }
+  .error-msg {
+    color: #f44336;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: center;
+  }

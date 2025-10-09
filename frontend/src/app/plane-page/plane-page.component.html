@@ -1,0 +1,33 @@
+<div class="container">
+    <h1>Список запланированных</h1>
+
+    <div *ngIf="isError" class="error-fullpage">
+      Вы пока ничего не добавили 😫
+    </div>
+    
+    <div class="films-grid">
+      <div class="film-card" 
+           *ngFor="let film of films; trackBy: trackByFilmId"
+           (click)="navigateToFilm(film.filmid)"
+           (mouseenter)="showFilmInfo(film)" 
+           (mouseleave)="hideFilmInfo()">
+        <img [src]="film.poster_link" [alt]="film.name" class="film-poster">
+        
+        <div class="film-info" *ngIf="hoveredFilm === film">
+          <h3>{{ film.name }}</h3>
+          <p>Год: {{ film.release_year }}</p>
+          <p>Страна: {{ film.countries.join(', ') }}</p>
+          
+          <ng-container *ngIf="film.time_minutes !== null">
+            <p>Продолжительность: {{ film.time_minutes }} мин.</p>
+            <p class="type-label">Фильм</p>
+          </ng-container>
+          
+          <ng-container *ngIf="film.time_minutes === null">
+            <p>Сезон: {{ film.season }}</p>
+            <p class="type-label">Сериал</p>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>

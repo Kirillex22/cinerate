@@ -1,0 +1,19 @@
+body {
+    color: white;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .mat-mdc-snack-bar-container.green-snackbar {
+    --mdc-snackbar-container-color: #4caf50;
+    color: white;
+    box-shadow: none;
+  }
+  
+  .mat-mdc-snack-bar-container.red-snackbar {
+    --mdc-snackbar-container-color: #f44336; 
+    color: white;
+    box-shadow: none;
+  }

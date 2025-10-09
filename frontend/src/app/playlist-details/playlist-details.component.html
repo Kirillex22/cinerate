@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="playlist-header">
+    <h1>{{ playlistName }}</h1>
+    <div class="action-buttons" *ngIf="showButtonDialog">
+      <button *ngIf="!editMode" (click)="editPlaylist()">Редактировать плейлист</button>
+      <button *ngIf="!editMode && isCreator" (click)="deletePlaylist()">Удалить плейлист</button>
+      <button *ngIf="!editMode && isCreator" (click)="manageAccess()">Настроить доступы</button>
+      <button *ngIf="editMode" (click)="finishEdit()">Закончить редактирование</button>
+    </div>
+  </div>
+
+  <div class="playlist-header">
+    <h2>{{ playlistDescription }}</h2>
+  </div>
+
+  <div *ngIf="isError" class="error-fullpage">
+    Это пока пустой плейлист 🤣
+  </div>
+  
+  <div class="films-grid">
+    <div class="film-card"
+         *ngFor="let film of films; trackBy: trackByFilmId"
+         (click)="!editMode && navigateToFilm(film.preview.filmid)"
+         (mouseenter)="showFilmInfo(film)"
+         (mouseleave)="hideFilmInfo()">
+      <img [src]="film.preview.poster_link" [alt]="film.preview.name" class="film-poster">
+      <button *ngIf="editMode && film.item.creatorid === currentUserId" class="remove-btn" 
+      (click)="$event.stopPropagation(); removeFilm(film)">✖</button>
+      <img *ngIf="editMode && film.item.creatorid !== currentUserId && filmCreatorsMap[film.item.creatorid]" 
+      class="creator-avatar" [src]="filmCreatorsMap[film.item.creatorid]!.avatar"
+       [alt]="filmCreatorsMap[film.item.creatorid]!.username" [title]="filmCreatorsMap[film.item.creatorid]!.username" 
+       (click)="$event.stopPropagation()">
+
+       <img *ngIf="editMode && film.item.creatorid !== currentUserId && filmCreatorsMap[film.item.creatorid] && currentUserId == playlistCreatorId" 
+        class="creator-avatar-admin" [src]="filmCreatorsMap[film.item.creatorid]!.avatar"
+        [alt]="filmCreatorsMap[film.item.creatorid]!.username" [title]="filmCreatorsMap[film.item.creatorid]!.username" 
+        (click)="$event.stopPropagation(); removeFilm(film)">
+
+      <div class="film-info" *ngIf="hoveredFilm === film">
+        <h3>{{ film.preview.name }}</h3>
+        <p>Год: {{ film.preview.release_year }}</p>
+        <p>Страна: {{ film.preview.countries.join(', ') }}</p>
+
+        <ng-container *ngIf="film.preview.time_minutes !== null">
+          <p>Продолжительность: {{ film.preview.time_minutes }} мин.</p>
+          <p class="type-label">Фильм</p>
+        </ng-container>
+
+        <ng-container *ngIf="film.preview.time_minutes === null">
+          <p>Сезон: {{ film.preview.season }}</p>
+          <p class="type-label">Сериал</p>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <app-playlist-access-dialog
+   *ngIf="showAccessDialog" 
+   [playlistId]="playlistId" 
+   (close)="showAccessDialog = false"
+   (nameChange)="onPlaylistNameChange($event)"
+   (descriptionChange)="onPlaylistDescriptionChange($event)">
+  </app-playlist-access-dialog>
+</div>

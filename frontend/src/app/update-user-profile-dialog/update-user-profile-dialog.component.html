@@ -1,0 +1,43 @@
+<div class="dialog-container">
+  <button class="close-btn" (click)="closeDialog(false)">&times;</button>
+  <h2 class="dialog-title">Изменить профиль</h2>
+  <div *ngIf="loading" class="loading-text">Загрузка...</div>
+  <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+  <form *ngIf="!loading" (ngSubmit)="save()">
+    <div class="block">
+      <label>Имя пользователя</label>
+      <input class="input" type="text" [(ngModel)]="form.username" name="username" required />
+    </div>
+    <div class="block">
+      <label>Описание профиля</label>
+      <textarea class="input" [(ngModel)]="form.bio" name="bio"></textarea>
+    </div>
+    <div class="block">
+      <label>Место проживания</label>
+      <input class="input" type="text" [(ngModel)]="form.location" name="location" />
+    </div>
+    <div class="block">
+      <label>Год рождения</label>
+      <input class="input" type="date" [(ngModel)]="form.birth_date" name="birth_date" />
+    </div>
+    <div class="block">
+      <label>Email</label>
+      <input class="input" type="email" [(ngModel)]="form.email" name="email" />
+    </div>
+    <div class="block">
+      <label>Публичность</label>
+      <div class="publicity-switch">
+        <button type="button" [class.active]="publicity" (click)="setPublicity(true)" [disabled]="publicityLoading">Публичный</button>
+        <button type="button" [class.active]="!publicity" (click)="setPublicity(false)" [disabled]="publicityLoading">Приватный</button>
+      </div>
+    </div>
+    <div class="block">
+      <label>Ссылка на аватар</label>
+      <input class="input" type="text" [(ngModel)]="form.avatar" name="avatar" />
+    </div>
+    <div class="collab-actions">
+      <button type="submit" class="button_edit" [disabled]="saving">Сохранить изменения</button>
+      <button type="button" (click)="closeDialog(false)">Отмена</button>
+    </div>
+  </form>
+</div>

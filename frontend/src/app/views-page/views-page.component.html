@@ -1,0 +1,32 @@
+<div class="container">
+  <h1>Просмотренные фильмы</h1>
+
+  <div *ngIf="isError" class="error-fullpage">
+    Может вы пока ничего не посмотрели? 🤔
+  </div>
+
+  <div class="films-list">
+    <div class="film-row" *ngFor="let film of watchedFilms">
+      <div class="poster-block" (click)="navigateToFilm(film.filmid)">
+        <img [src]="film.poster_link" [alt]="film.name" class="film-poster clickable">
+      </div>
+      <div class="info-block">
+        <div class="film-title">{{ film.name }}</div>
+        <div class="film-meta">{{ film.countries.join(', ') }}, {{ film.director }}, {{ film.release_year }}</div>
+        <div class="ratings-table">
+          <div class="rating-row" *ngFor="let char of characteristics">
+            <span class="char-label">{{ char.label }}</span>
+            <span class="char-value {{ getRatingClass(film, char.key) }}">
+                {{ getUserRatingWord(film, char.key) }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="actions-block">
+        <button class="edit-rating-btn" (click)="openRatingDialog(film)">
+          <span class="material-icons">Изменить оценку</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

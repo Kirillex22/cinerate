@@ -1,0 +1,164 @@
+<div class="dialog-container">
+  <button class="close-btn" (click)="onCancel()">&times;</button>
+  <h2 class="dialog-title">Сгенерировать плейлист</h2>
+  <form [formGroup]="form" (ngSubmit)="generatePlaylist()">
+    <div class="grid">
+      <div class="grid-item grid-item-name">
+        <label>Название плейлиста:</label>
+        <input class="input" formControlName="name" required />
+      </div>
+      <div class="grid-item grid-item-description">
+        <label>Описание:</label>
+        <textarea class="input" formControlName="description"></textarea>
+      </div>
+      <div class="grid-item checkbox-wrapper">
+        <label for="is_public">Публичный</label>
+        <input type="checkbox" formControlName="is_public" id="is_public" />
+      </div>
+      <div class="grid-item grid-item-genattrs">
+        <h4>Параметры генерации</h4>
+        <div [formGroup]="genAttrsGroup">
+          <div class="field-block">
+            <label>Название фильма:</label>
+            <input class="input" formControlName="name" />
+          </div>
+        
+          <div class="field-block">
+            <label>Человек:</label>
+            <input class="input" formControlName="person" />
+          </div>
+
+          <!-- Жанры -->
+          <div class="genres">
+            <label>Жанр:</label>
+            <input class="input" [(ngModel)]="genreInput" [ngModelOptions]="{standalone: true}" list="genres-list" placeholder="Жанр" (keyup.enter)="addGenre()" />
+            <datalist id="genres-list">
+              <option *ngFor="let g of genresList" [value]="g"></option>
+            </datalist>
+            <button type="button" (click)="addGenre()">+</button>
+            <span class="genre-chip" *ngFor="let genre of genAttrsGroup.get('genres')!.value">
+              {{ genre }} <button type="button" (click)="removeGenre(genre)">x</button>
+            </span>
+          </div>
+
+          <!-- Страны -->
+          <div class="genres">
+            <label>Страна:</label>
+            <input class="input" [(ngModel)]="countryInput" [ngModelOptions]="{standalone: true}" placeholder="Страна" (keyup.enter)="addCountry()" />
+            <button type="button" (click)="addCountry()">+</button>
+            <span class="genre-chip" *ngFor="let country of genAttrsGroup.get('countries')!.value">
+              {{ country }} <button type="button" (click)="removeCountry(country)">x</button>
+            </span>
+          </div>
+
+          <!-- Год -->
+          <div class="range" [formGroup]="getGroup('year')">
+            <label>Год:</label>
+            <input class="input" type="number" formControlName="lower" placeholder="от" min="1900" max="2100" />
+            <input class="input" type="number" formControlName="upper" placeholder="до" min="1900" max="2100" />
+          </div>
+
+          <!-- Рейтинг -->
+          <div class="range" [formGroup]="getGroup('kp_rating')">
+            <label>KP рейтинг:</label>
+            <input class="input" type="number" formControlName="lower" placeholder="от" min="0" max="10" />
+            <input class="input" type="number" formControlName="upper" placeholder="до" min="0" max="10" />
+          </div>
+
+          <!-- Длительность -->
+          <div class="range" [formGroup]="getGroup('length')">
+            <label>Длительность (мин):</label>
+            <input class="input" type="number" formControlName="lower" placeholder="от" min="0" />
+            <input class="input" type="number" formControlName="upper" placeholder="до" min="0" />
+          </div>
+
+          <!-- Возрастной рейтинг -->
+          <div class="range" [formGroup]="getGroup('age_rating')">
+            <label>Возрастной рейтинг:</label>
+            <input class="input" type="number" formControlName="lower" placeholder="от" min="0" max="21" />
+            <input class="input" type="number" formControlName="upper" placeholder="до" min="0" max="21" />
+          </div>
+
+          <!-- Сериал/фильм -->
+          <label>Тип:</label>
+          <select class="input" formControlName="is_series">
+            <option [ngValue]="undefined">Сериал или фильм</option>
+            <option [ngValue]="true">Сериал</option>
+            <option [ngValue]="false">Фильм</option>
+          </select>
+
+          <div [formGroup]="userRatingGroup" class="user-rating-group">
+            <label>Оценка пользователя:</label>
+            <div class="user-rating-selects">
+              <div class="user-rating-item">
+                <span>Сюжет:</span>
+                <select class="input" formControlName="storyline">
+                  <option [ngValue]="undefined">-</option>
+                  <option [ngValue]="1">Плохо</option>
+                  <option [ngValue]="2">Нормально</option>
+                  <option [ngValue]="3">Хорошо</option>
+                  <option [ngValue]="4">Отлично</option>
+                </select>
+              </div>
+              <div class="user-rating-item">
+                <span>Музыка:</span>
+                <select class="input" formControlName="music">
+                  <option [ngValue]="undefined">-</option>
+                  <option [ngValue]="1">Плохо</option>
+                  <option [ngValue]="2">Нормально</option>
+                  <option [ngValue]="3">Хорошо</option>
+                  <option [ngValue]="4">Отлично</option>
+                </select>
+              </div>
+              <div class="user-rating-item">
+                <span>Монтаж:</span>
+                <select class="input" formControlName="montage">
+                  <option [ngValue]="undefined">-</option>
+                  <option [ngValue]="1">Плохо</option>
+                  <option [ngValue]="2">Нормально</option>
+                  <option [ngValue]="3">Хорошо</option>
+                  <option [ngValue]="4">Отлично</option>
+                </select>
+              </div>
+              <div class="user-rating-item">
+                <span>Актёрская игра:</span>
+                <select class="input" formControlName="acting_game">
+                  <option [ngValue]="undefined">-</option>
+                  <option [ngValue]="1">Плохо</option>
+                  <option [ngValue]="2">Нормально</option>
+                  <option [ngValue]="3">Хорошо</option>
+                  <option [ngValue]="4">Отлично</option>
+                </select>
+              </div>
+              <div class="user-rating-item">
+                <span>Атмосфера:</span>
+                <select class="input" formControlName="atmosphere">
+                  <option [ngValue]="undefined">-</option>
+                  <option [ngValue]="1">Плохо</option>
+                  <option [ngValue]="2">Нормально</option>
+                  <option [ngValue]="3">Хорошо</option>
+                  <option [ngValue]="4">Отлично</option>
+                </select>
+              </div>
+              <div class="user-rating-item">
+                <span>Оригинальность:</span>
+                <select class="input" formControlName="originality">
+                  <option [ngValue]="undefined">-</option>
+                  <option [ngValue]="1">Плохо</option>
+                  <option [ngValue]="2">Нормально</option>
+                  <option [ngValue]="3">Хорошо</option>
+                  <option [ngValue]="4">Отлично</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+    <div class="action-buttons">
+      <button type="submit" [disabled]="loading">Сгенерировать</button>
+      <button type="button" (click)="onCancel()">Отмена</button>
+    </div>
+  </form>
+</div>

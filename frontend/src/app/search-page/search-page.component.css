@@ -1,0 +1,326 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.search-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+h1 {
+  padding: 32px 24px;
+  font-size: 2rem;
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+
+.search-layout {
+  flex: 1 1 auto;
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  padding: 0px 24px;
+  height: 70vh;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.search-bar {
+  flex: 0 0 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #181818;
+  padding: 24px 20px;
+  border-radius: 24px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  align-self: flex-start;
+}
+
+.search-bar input,
+.search-bar select {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-right: 5px;
+}
+
+.search-bar button {
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.genres {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.genre-chip {
+  background: #333;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin-left: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.genre-chip button {
+  background: none;
+  color: #fff;
+  border: none;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.films-grid {
+  flex: 1 1 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 0 10px 0 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.film-card {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #181818;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.film-card.already-added {
+  border: 4px solid #4CAF50;
+  border-radius: 8px;
+  background-color: rgba(76, 175, 80, 0.1); /* светло-зелёный фон */
+  padding: 4px; /* чтобы рамка не налезала на картинку */
+}
+
+.film-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.film-card:hover .film-poster {
+  transform: scale(1.05);
+}
+
+.film-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 15px;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.film-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.film-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.alternative-name {
+  font-size: 12px;
+  color: #cccccc;
+  margin: 5px 0;
+}
+
+.type-label {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.no-results {
+  text-align: center;
+  color: #888;
+  font-size: 22px;
+  margin: 40px auto;
+}
+
+.error-msg {
+  background: #2d1a1a;
+  color: #ff6b6b;
+  border: 1.5px solid #b91c1c;
+  border-radius: 10px;
+  padding: 16px 24px;
+  margin: 24px auto 0 auto;
+  max-width: 600px;
+  font-size: 1.15rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(185, 28, 28, 0.08);
+  letter-spacing: 0.5px;
+}
+
+.search-bar,
+.films-grid {
+  scrollbar-width: thin;
+  scrollbar-color: #000 #181818;
+}
+
+.search-bar::-webkit-scrollbar,
+.films-grid::-webkit-scrollbar {
+  width: 10px;
+  background-color: #181818;
+  border-radius: 10px;
+}
+
+.search-bar::-webkit-scrollbar-track,
+.films-grid::-webkit-scrollbar-track {
+  background-color: #181818;
+  border-radius: 10px;
+}
+
+.search-bar::-webkit-scrollbar-thumb,
+.films-grid::-webkit-scrollbar-thumb {
+  background-color: #000;
+  border-radius: 10px;
+  border: 2px solid #181818;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar::-webkit-scrollbar-thumb:hover,
+.films-grid::-webkit-scrollbar-thumb:hover {
+  background-color: #222;
+  cursor: pointer;
+}
+
+.custom-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.custom-dialog {
+  background: #181818;
+  color: #fff;
+  border-radius: 16px;
+  padding: 32px 24px 24px 24px;
+  min-width: 320px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.season-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 16px 0;
+}
+
+.season-buttons button {
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.season-buttons button:hover {
+  background: #444;
+}
+
+.close-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.close-btn:hover {
+  background: #333;
+}
+
+.add-all-btn {
+  background: #1e7e34;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.add-all-btn:hover {
+  background: #218838;
+}
+
+.green-snackbar {
+  background-color: #4caf50; /* зелёный цвет */
+  color: white; /* белый текст для контраста */
+}
+
+.red-snackbar {
+  background-color: #f44336; /* зелёный цвет */
+  color: white; /* белый текст для контраста */
+}

@@ -1,0 +1,136 @@
+.container {
+  padding: 20px;
+  color: #fff;
+  max-width: 100%; 
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+
+.films-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.film-row {
+  display: flex;
+  flex-direction: row;
+  background: #181818;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  padding: 18px 24px;
+  gap: 28px;
+  position: relative;      
+  box-sizing: border-box; 
+}
+
+.poster-block {
+  min-width: 110px;
+  max-width: 110px;
+  cursor: pointer;
+}
+
+.film-poster {
+  width: 110px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.22);
+  transition: transform 0.2s;
+}
+.film-poster.clickable:hover {
+  transform: scale(1.04);
+}
+
+.info-block {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.film-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.film-meta {
+  color: #b0b0b0;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.ratings-table {
+  display: grid;
+  grid-template-columns: 0.2fr 0.2fr;
+  gap: 6px 24px;
+  margin-top: 8px;
+}
+
+.rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.08rem;
+}
+.char-label {
+  color: #ccc;
+  min-width: 110px;
+}
+.char-value {
+    font-weight: 600;
+    color: #fff;
+    min-width: 100px;
+    text-align: center;
+    display: inline-block;
+    padding: 2px 14px;
+    border-radius: 12px;
+    margin-left: 8px;
+    background: #2a2a2a;
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  .char-value.bad { background: #b91c1c; color: #fff; }       
+  .char-value.normal { background: #f59e42; color: #fff; }     
+  .char-value.good { background: #3b82f6; color: #fff; }      
+  .char-value.excellent { background: #22c55e; color: #fff; }
+
+
+.actions-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 18px;
+}
+.edit-rating-btn {
+  background: #232323;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.18s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+.edit-rating-btn:hover {
+  background: #3b82f6;
+  color: #fff;
+}
+.material-icons {
+  font-size: 1.3rem;
+  vertical-align: middle;
+}
+
+.error-fullpage {
+  color: #fff;
+  text-align: center;
+  margin-top: 80px;
+  font-size: 24px;
+  font-weight: bold;
+}
