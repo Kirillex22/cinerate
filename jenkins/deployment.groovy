@@ -94,7 +94,7 @@ ADMIN_USER:
                     echo "🐳 Запускаем docker-compose..."
                     sh '''
                     docker-compose --env-file .env down || true
-                    docker-compose --env-file .env build frontend
+                    docker-compose --env-file .env build 
                     docker-compose --env-file .env up -d
                     '''
                 }
