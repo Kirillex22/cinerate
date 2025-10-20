@@ -1,73 +1,85 @@
-.dialog-container {
-  width: 100%;
-  max-width: 600px;
-  min-width: 320px;
-  background: #232323;
-  border-radius: 16px;
-  padding: 24px 16px 16px 16px;
-  color: #fff;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+:host {
+  display: block;           /* чтобы элемент занимал пространство */
+  width: 900px;             /* нужная ширина */
+  max-width: 90vw;          /* адаптивность по ширине */
+  height: auto;            /* нужная высота */
+  max-height: 90vh;         /* адаптивность по высоте */
+  background: #1e1e1e;      /* фон, если нужно */
+  border-radius: 15px;      /* скругления */
+  padding: 2.5em;            /* внутренние отступы */
+  box-sizing: border-box;   /* чтобы padding учитывался в размерах */
+  overflow: auto;
+  position: relative;       /* если внутри есть абсолютные элементы */
+  box-shadow: 0 4px 32px rgba(0,0,0,0.45); /* тень */
 }
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.dialog-title {
+  flex: 1;
+  text-align: center;
+  margin-bottom: 0.5em;
+  font-size: 2em;
+  font-weight: 700;
+}
+
 .close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  background: transparent;
+  top: 1.5em;
+  right: 1.5em;
+  background: none;
   border: none;
-  color: #aaa;
-  font-size: 22px;
   cursor: pointer;
-  transition: color 0.2s;
   z-index: 2;
 }
-.close-btn:hover {
-  color: #fff;
+
+button {
+  font-family: 'Montserrat';
 }
-.dialog-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 24px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
+
 .block {
-  margin-bottom: 24px;
+  margin-bottom: 1.5em;
 }
-.playlist-name {
-  font-size: 1.2rem;
+
+h3 {
+  font-size: 1em;
   font-weight: 600;
-  background: #181818;
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-top: 6px;
-  color: #fff;
+  color: #777777;
 }
+
 .publicity-switch {
   display: flex;
   gap: 10px;
   margin-top: 8px;
 }
+
 .publicity-switch button {
   flex: 1 1 120px;
-  padding: 8px 0;
+  padding: 0.75em 0;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  background-color: #444;
-  color: #fff;
+  background-color: #252525;
+  color: #d9d9d9;
   transition: background 0.2s;
+  font-family: 'Montserrat';
+  font-size: 1em;
+  font-weight: 400;
 }
 .publicity-switch button.active,
 .publicity-switch button:active {
-  background-color: #2196f3;
-  color: #fff;
+  background-color: #323232;
+  color: #ffffff;
+  font-weight: 600;
 }
+
 .publicity-switch button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -76,14 +88,14 @@
   display: inline-flex;
   align-items: center;
   margin-right: 12px;
-  margin-bottom: 8px;
-  background: #181818;
+  background: #252525;
   border-radius: 8px;
   padding: 4px 10px 4px 4px;
   position: relative;
   transition: box-shadow 0.2s;
   cursor: pointer;
 }
+
 .user-card.edit-mode {
   background: #2a2a2a;
 }
@@ -96,8 +108,8 @@
   border: 2px solid #444;
 }
 .username {
-  font-size: 1rem;
-  color: #fff;
+  font-size: 1em;
+  color: #d9d9d9;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -126,56 +138,89 @@
   display: flex;
   gap: 10px;
 }
-.collab-actions button, .edit-collab-actions button, .button_edit {
+.collab-actions button, .edit-collab-actions button {
   flex: 1 1 120px;
-  padding: 8px 0;
+  padding: 0.7em 0;
   min-width: 100px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  background-color: #f0f0f0;
-  color: #232323;
+  background-color: #d9d9d9;
+  color: #252525;
   transition: background 0.2s;
+}
+
+.button_edit {
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  background: none;
+}
+
+.button_edit-btn img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: none;
 }
 
 .collab-actions button:hover, .edit-collab-actions button:hover {
   background-color: #e0e0e0;
 }
 .add-collab-block {
-  margin-top: 10px;
+  margin-top: 15px;
 }
+
 .add-collab-block input {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #444;
-  background: #181818;
-  color: #fff;
-  margin-right: 8px;
-  width: 180px;
+  background: #252525;
+  color: #d9d9d9;
+  border: 1px solid #252525;
+  border-radius: 15px;
+  padding: 8px 10px;
+  font-size: 1em;
+  width: 250px;
+  transition: border-color 0.2s, background 0.2s;
+  resize: none;
+  margin-right: 20px;
+  font-family: 'Montserrat';
 }
+
 .add-collab-block button {
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 0.5em;
   border: none;
-  background: #2196f3;
-  color: #fff;
-  font-weight: bold;
-  margin-right: 6px;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: bold;
+  background-color: #252525;
+  color: #d9d9d9;
   transition: background 0.2s;
+  font-family: 'Montserrat';
+  font-size: 1em;
+  font-weight: 400;
+  margin-left: 5px;
 }
+
 .add-collab-block button:hover {
-  background: #1976d2;
+  background-color: #323232;
+  color: #ffffff;
+  font-weight: 600;
 }
+
 .search-results {
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .add-collab-btn {
-  background: #4caf50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -186,15 +231,14 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-.add-collab-btn:hover {
-  background: #388e3c;
-}
+
 .loading-text {
   text-align: center;
   font-size: 1.1rem;
   margin-bottom: 10px;
   color: #bbb;
 }
+
 .error-msg {
   color: #f44336;
   font-weight: 600;
@@ -203,15 +247,15 @@
 } 
 
 .input {
-  background: #1e1e1e;
-  color: #f0f0f0;
-  border: 1px solid #333;
-  border-radius: 6px;
+  background: #252525;
+  color: #d9d9d9;
+  border: 1px solid #252525;
+  border-radius: 15px;
   padding: 10px;
-  font-size: 1rem;
-  width: 80%;
-  box-sizing: border-box;
+  font-size: 1.5em;
+  width: 100%;
   transition: border-color 0.2s, background 0.2s;
   resize: none;
   margin-right: 20px;
+  font-family: 'Montserrat';
 }

@@ -1,19 +1,119 @@
-body {
-    color: white;
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-    font-family: 'Roboto', sans-serif;
-  }
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
 
-  .mat-mdc-snack-bar-container.green-snackbar {
-    --mdc-snackbar-container-color: #4caf50;
-    color: white;
-    box-shadow: none;
-  }
-  
-  .mat-mdc-snack-bar-container.red-snackbar {
-    --mdc-snackbar-container-color: #f44336; 
-    color: white;
-    box-shadow: none;
-  }
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  color: #d9d9d9;
+  margin: 0;
+  padding: 0 6vh 3vh;
+  background-color: #000000;
+  font-family: 'Montserrat';
+}
+
+.mat-mdc-snack-bar-container.green-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  color: white;
+  box-shadow: none;
+}
+
+.mat-mdc-snack-bar-container.red-snackbar {
+  --mdc-snackbar-container-color: #f44336; 
+  color: white;
+  box-shadow: none;
+}
+
+.mat-mdc-snack-bar-container{
+  --mdc-snackbar-container-color: #f44336; 
+  color: white;
+  box-shadow: none;
+}
+
+.mat-mdc-snack-bar-container .mdc-button__ripple::before {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.mat-mdc-dialog-container {
+  background-color: transparent !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-dialog-inner-container {
+  background-color: transparent !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-dialog-surface {
+  background-color: #1e1e1e !important;
+  border-radius: 15px !important;
+  padding: 1em !important;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.45) !important;
+  overflow: auto !important;
+  font-family: 'Montserrat';
+}
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}

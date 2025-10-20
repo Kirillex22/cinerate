@@ -1,17 +1,30 @@
-a{
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-}
-
 nav {
-  display: flex;
-  margin-top: 20px;
-  justify-content: center;
-  gap: 20px;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    padding: 3vh 0;
 }
 
-nav a {
-  text-decoration: none;
+a{
+    color: #d9d9d9;
+    font-weight: 700;
+    font-size: 2em;
+    font-family: 'Montserrat';
+    text-decoration: none;
+}
+
+a.active {
+    color: #d9d9d9;
+    font-weight: 700;
+    font-size: 2em;
+    font-family: 'Montserrat';
+    -webkit-text-stroke-width: 0.125rem;
+    -webkit-text-stroke-color: #d9d9d9;
+    text-decoration: none;
+}
+
+.menu {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: 2%;
 }

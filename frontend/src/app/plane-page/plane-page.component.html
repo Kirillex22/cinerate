@@ -14,19 +14,24 @@
         <img [src]="film.poster_link" [alt]="film.name" class="film-poster">
         
         <div class="film-info" *ngIf="hoveredFilm === film">
-          <h3>{{ film.name }}</h3>
-          <p>Год: {{ film.release_year }}</p>
-          <p>Страна: {{ film.countries.join(', ') }}</p>
+          <div class="film-name">
+            {{ film.name }}
+            <span style="font-weight: 400; color: #9d9d9d;">{{ film.release_year }}</span>
+          </div>
+
+          <p *ngIf="film.alternative_name" class="alternative-name">{{ film.alternative_name }}</p>
           
-          <ng-container *ngIf="film.time_minutes !== null">
-            <p>Продолжительность: {{ film.time_minutes }} мин.</p>
+          <p>{{ film.countries.join(', ') }}</p>
+          
+          <ng-container *ngIf="film.time_minutes != null && film.time_minutes !== 0; else serialCard">
+            <p>{{ film.time_minutes }} мин</p>
             <p class="type-label">Фильм</p>
           </ng-container>
           
-          <ng-container *ngIf="film.time_minutes === null">
-            <p>Сезон: {{ film.season }}</p>
+          <ng-template #serialCard>
+            <p>{{ film.season }} сезон</p>
             <p class="type-label">Сериал</p>
-          </ng-container>
+          </ng-template>
         </div>
       </div>
     </div>

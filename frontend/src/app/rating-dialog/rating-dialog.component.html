@@ -1,26 +1,25 @@
-<div class="dialog-container">
-    <button class="close-btn" (click)="onCancel()">&times;</button>
-    <h2 class="dialog-title">Оценивание фильма</h2>
-    <div class="grid">
-        <div class="grid-item" *ngFor="let char of characteristics">
-            <div class="char-label">{{ char.label }}</div>
-            <div class="rating-options-grid">
-              <button
-                type="button"
-                *ngFor="let word of ratingWords; let i = index"
-                [class.selected]="ratings[char.key] === i + 1"
-                [class.bad]="ratings[char.key] === 1 && i === 0"
-                [class.normal]="ratings[char.key] === 2 && i === 1"
-                [class.good]="ratings[char.key] === 3 && i === 2"
-                [class.excellent]="ratings[char.key] === 4 && i === 3"
-                (click)="setRating(char.key, i + 1)">
-                {{ word }}
-              </button>
-            </div>
+<div сlass="dialog-header">
+  <h2 class="dialog-title">Оценивание фильма</h2>
+  <button class="close-btn" (click)="onCancel()"><img src="assets/close.svg" alt="Закрыть"></button>
+</div>
+<div class="grid">
+    <div class="grid-item" *ngFor="let char of characteristics">
+        <div class="char-label">{{ char.label }}</div>
+        <div class="rating-options-grid">
+          <button
+            type="button"
+            *ngFor="let word of ratingWords; let i = index"
+            [class.selected]="ratings[char.key] === i + 1"
+            [class.bad]="ratings[char.key] === 1 && i === 0"
+            [class.normal]="ratings[char.key] === 2 && i === 1"
+            [class.good]="ratings[char.key] === 3 && i === 2"
+            [class.excellent]="ratings[char.key] === 4 && i === 3"
+            (click)="setRating(char.key, i + 1)">
+            {{ word }}
+          </button>
         </div>
     </div>
-    <div class="dialog-actions">
-      <button class="action-btn" (click)="onCancel()">Отмена</button>
-      <button class="action-btn" (click)="onSave()">Сохранить</button>
-    </div>
+</div>
+<div class="buttom-actions">
+  <button class="action-btn" (click)="onSave()">Сохранить</button>
 </div>

@@ -76,6 +76,7 @@ export class PlaylistDetailsComponent implements OnInit {
       this.playlistName = playlist.name;
       this.playlistDescription = playlist.description;
       this.playlistCreatorId = playlist.userid
+      collaboratorIds.push(this.playlistCreatorId);
       this.isCreator = this.currentUserId == this.playlistCreatorId
       if ((collaboratorIds.includes(this.currentUserId)) || (this.isCreator)){
         this.showButtonDialog = true;
@@ -113,12 +114,20 @@ export class PlaylistDetailsComponent implements OnInit {
     return film.preview.filmid.split('-')[1] || '';
   }
 
+  getCollaboratorIds(): string[] {
+    return Object.keys(this.collaboratorsMap);
+  }
+
   editPlaylist() {
     this.editMode = true;
   }
 
   finishEdit() {
     this.editMode = false;
+  }
+
+  navigateToProfile(userId: string) {
+    this.navigateToService.navigateToProfileInNewWindow(userId);
   }
 
   removeFilm(film: PlaylistContentItem) {

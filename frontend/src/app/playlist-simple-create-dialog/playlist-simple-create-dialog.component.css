@@ -5,61 +5,45 @@
   box-sizing: border-box;
 }
 
-.dialog-container {
-  background: #232323;
-  border-radius: 16px;
-  padding: 32px 32px 24px 32px;
-  width: 100%;
-  max-width: 440px;
-  box-sizing: border-box;
-  color: #fff;
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.45);
 }
-
+.dialog-title {
+  flex: 1;
+  text-align: center;
+  margin-bottom: 0.5em;
+  font-size: 2em;
+  font-weight: 700;
+}
 .close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  background: transparent;
+  top: 1.5em;
+  right: 1.5em;
+  background: none;
   border: none;
-  color: #aaa;
-  font-size: 22px;
   cursor: pointer;
-  transition: color 0.2s;
   z-index: 2;
-}
-
-.close-btn:hover {
-  color: #fff;
-}
-
-.dialog-title {
-  text-align: center;
-  font-size: 2.1rem;
-  margin-bottom: 32px;
-  font-weight: 700;
-  letter-spacing: 1px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 22px 22px;
-  margin-bottom: 28px;
+  margin-top: 10px;
 }
 
 .grid-item {
-  background: #181818;
-  border-radius: 12px;
-  padding: 18px 10px 16px 10px;
+  background: #1e1e1e;
+  border-color: #1e1e1e;
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-width: 100px;
   min-height: 60px;
   box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
 }
 
 .grid-item-name {
@@ -77,15 +61,12 @@
   justify-content: start;
 }
 
-.full-width {
-  width: 100%;
-  max-width: 100%;
-}
 
 .input-label {
   font-weight: 600;
   margin-bottom: 6px;
-  color: #ddd;
+  color: #777777;
+  font-size: 1em;
 }
 
 .custom-input,
@@ -93,24 +74,26 @@
   width: 100%;
   max-width: 100%;
   padding: 10px;
-  border: 1px solid #333;
-  background: #1e1e1e;
+  border: 1px solid #252525;
+  background: #252525;
   color: #f0f0f0;
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: 1.1em;
+  font-weight: 400;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
+  font-family: 'Montserrat';
 }
 
 .custom-input:focus,
 .custom-textarea:focus {
-  border-color: #3b82f6;
-  background: #2a2a2a;
+  border-color: #252525;
+  background: #2c2c2c;
 }
 
 .custom-textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 .custom-checkbox {
@@ -119,44 +102,36 @@
   gap: 10px;
   font-weight: 500;
   color: #ccc;
+  font-family: 'Montserrat';
+  font-size: 1.1em;
 }
 
 .custom-checkbox input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #3b82f6;
+  accent-color: #777;
 }
 
-.dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-  margin-top: 18px;
-}
 
-.action-buttons {
-  display: flex;
-  flex-wrap: wrap;              
-  gap: 10px;
-  justify-content: flex-end; 
-}
-
-.action-buttons button {
-  flex: 1 1 150px;          
-  max-width: 180px;
-  padding: 10px 20px;
+.action-btn {
+  background: #252525;
+  color: #d9d9d9;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
+  width: 25em;
   text-align: center;
-  background-color: #f0f0f0;
-  transition: background-color 0.3s;
+  border-radius: 15px;
+  padding: 1em 2em;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 1.5em;
 }
 
-.action-buttons button:hover {
-  background-color: #e0e0e0;
-}
+.action-btn:hover {
+  background: #323232;
+  color: #dfdfdf;
+} 
 
 .error-msg {
   color: #f44336;

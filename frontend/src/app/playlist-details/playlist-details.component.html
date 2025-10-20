@@ -1,11 +1,31 @@
 <div class="container">
   <div class="playlist-header">
-    <h1>{{ playlistName }}</h1>
+    <div class="title-with-avatars">
+      <h1>{{ playlistName }}</h1>
+      
+      <div class="collaborators-avatars">
+        <img *ngFor="let userId of getCollaboratorIds()" 
+             class="creator-avatar-all" 
+             [src]="collaboratorsMap[userId].avatar"
+             [alt]="collaboratorsMap[userId].username" 
+             [title]="collaboratorsMap[userId].username"
+             (click)="navigateToProfile(userId)">
+      </div>
+    </div>
+
     <div class="action-buttons" *ngIf="showButtonDialog">
-      <button *ngIf="!editMode" (click)="editPlaylist()">Редактировать плейлист</button>
-      <button *ngIf="!editMode && isCreator" (click)="deletePlaylist()">Удалить плейлист</button>
-      <button *ngIf="!editMode && isCreator" (click)="manageAccess()">Настроить доступы</button>
-      <button *ngIf="editMode" (click)="finishEdit()">Закончить редактирование</button>
+      <button class="action-btn" *ngIf="!editMode" (click)="editPlaylist()">
+        <img src="assets/edit.svg" alt="Редактировать плейлист">
+      </button>
+      <button class="action-btn" *ngIf="!editMode && isCreator" (click)="deletePlaylist()">
+        <img src="assets/delete_playlist.svg" alt="Удалить плейлист">
+      </button>
+      <button class="action-btn" *ngIf="!editMode && isCreator" (click)="manageAccess()">
+        <img src="assets/settings.svg" alt="Настройки">
+      </button>
+      <button class="action-btn" *ngIf="editMode" (click)="finishEdit()">
+        <img src="assets/done.svg" alt="Закончить редактирование">
+      </button>
     </div>
   </div>
 
@@ -24,8 +44,10 @@
          (mouseenter)="showFilmInfo(film)"
          (mouseleave)="hideFilmInfo()">
       <img [src]="film.preview.poster_link" [alt]="film.preview.name" class="film-poster">
-      <button *ngIf="editMode && film.item.creatorid === currentUserId" class="remove-btn" 
-      (click)="$event.stopPropagation(); removeFilm(film)">✖</button>
+
+      <button *ngIf="(editMode &&  film.item.creatorid === currentUserId) || (editMode && !filmCreatorsMap[film.item.creatorid] && currentUserId == playlistCreatorId)" class="remove-btn" 
+      (click)="$event.stopPropagation(); removeFilm(film)"><img src="assets/delete_film.svg" alt="Удалить" style="height: 32px; width: 32px;"/></button>
+
       <img *ngIf="editMode && film.item.creatorid !== currentUserId && filmCreatorsMap[film.item.creatorid]" 
       class="creator-avatar" [src]="filmCreatorsMap[film.item.creatorid]!.avatar"
        [alt]="filmCreatorsMap[film.item.creatorid]!.username" [title]="filmCreatorsMap[film.item.creatorid]!.username" 
@@ -37,28 +59,34 @@
         (click)="$event.stopPropagation(); removeFilm(film)">
 
       <div class="film-info" *ngIf="hoveredFilm === film">
-        <h3>{{ film.preview.name }}</h3>
-        <p>Год: {{ film.preview.release_year }}</p>
-        <p>Страна: {{ film.preview.countries.join(', ') }}</p>
+        <div class="film-name">
+          {{ film.preview.name }}
+          <span style="font-weight: 400; color: #9d9d9d;">{{ film.preview.release_year }}</span>
+        </div>
 
-        <ng-container *ngIf="film.preview.time_minutes !== null">
-          <p>Продолжительность: {{ film.preview.time_minutes }} мин.</p>
+        <p *ngIf="film.preview.alternative_name" class="alternative-name">{{ film.preview.alternative_name }}</p>
+        
+        <p>{{ film.preview.countries.join(', ') }}</p>
+        
+        <ng-container *ngIf="film.preview.time_minutes != null && film.preview.time_minutes !== 0; else serialCard">
+          <p>{{ film.preview.time_minutes }} мин</p>
           <p class="type-label">Фильм</p>
         </ng-container>
-
-        <ng-container *ngIf="film.preview.time_minutes === null">
-          <p>Сезон: {{ film.preview.season }}</p>
+        
+        <ng-template #serialCard>
+          <p>{{ film.preview.season }} сезон</p>
           <p class="type-label">Сериал</p>
-        </ng-container>
+        </ng-template>
       </div>
     </div>
   </div>
 
-  <app-playlist-access-dialog
-   *ngIf="showAccessDialog" 
-   [playlistId]="playlistId" 
-   (close)="showAccessDialog = false"
-   (nameChange)="onPlaylistNameChange($event)"
-   (descriptionChange)="onPlaylistDescriptionChange($event)">
-  </app-playlist-access-dialog>
+  <div class="dialog-overlay" *ngIf="showAccessDialog">
+    <app-playlist-access-dialog
+      [playlistId]="playlistId"
+      (close)="showAccessDialog = false"
+      (nameChange)="onPlaylistNameChange($event)"
+      (descriptionChange)="onPlaylistDescriptionChange($event)">
+    </app-playlist-access-dialog>
+  </div>
 </div>

@@ -1,27 +1,27 @@
-<div class="dialog-container">
-  <button class="close-btn" (click)="onCancel()">&times;</button>
-  <h2 class="dialog-title">Создать простой плэйлист</h2>
-  <form [formGroup]="form" (ngSubmit)="createPlaylist()">
-    <div class="grid">
-      <div class="grid-item grid-item-name">
-        <label class="input-label" for="name">Название</label>
-        <input id="name" type="text" formControlName="name" required class="custom-input full-width" />
-      </div>
-      <div class="grid-item grid-item-description">
-        <label class="input-label" for="description">Описание</label>
-        <textarea id="description" formControlName="description" class="custom-textarea full-width"></textarea>
-      </div>
-      <div class="grid-item grid-item-public">
-        <label class="custom-checkbox">
-          <input type="checkbox" formControlName="is_public" />
-          <span>Публичный</span>
-        </label>
-      </div>
-    </div>
-    <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
-    <div class="action-buttons">
-      <button type="submit" [disabled]="loading">Создать</button>
-      <button type="button" (click)="onCancel()">Отмена</button>
-    </div>
-  </form>
+<div сlass="dialog-header">
+  <h2 class="dialog-title">Создать плейлист</h2>
+  <button class="close-btn" (click)="onCancel()"><img src="assets/close.svg" alt="Закрыть"></button>
 </div>
+
+<form [formGroup]="form" (ngSubmit)="createPlaylist()">
+  <div class="grid">
+    <div class="grid-item grid-item-name">
+      <label class="input-label" for="name">Название</label>
+      <input id="name" type="text" formControlName="name" required class="custom-input full-width" />
+    </div>
+    <div class="grid-item grid-item-description">
+      <label class="input-label" for="description">Описание</label>
+      <textarea id="description" formControlName="description" class="custom-textarea full-width"></textarea>
+    </div>
+    <div class="grid-item grid-item-public">
+      <label class="custom-checkbox">
+        <input type="checkbox" formControlName="is_public" />
+        <span>Публичный</span>
+      </label>
+    </div>
+  </div>
+  <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <button class="action-btn" type="submit" [disabled]="loading">Создать</button>
+  </div>
+</form>

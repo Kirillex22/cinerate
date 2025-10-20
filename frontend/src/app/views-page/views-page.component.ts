@@ -14,6 +14,7 @@ import { NavigateService } from '../services/navigateTo.service';
   templateUrl: './views-page.component.html',
   styleUrl: './views-page.component.css'
 })
+
 export class ViewsPageComponent implements OnInit {
   watchedFilms: FilmDetails[] = [];
   isError: boolean = false;
@@ -47,10 +48,13 @@ export class ViewsPageComponent implements OnInit {
 
   openRatingDialog(film: FilmDetails) {
     const dialogRef = this.dialog.open(RatingDialogComponent, {
-      data: { film, ratings: film.user_rating }
+      width: '900px',
+      maxWidth: '90vw',
+      data: { film, ratings: film.user_rating },
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result)
         this.filmService.rateFilm(film.filmid, result).subscribe(() => {
           film.user_rating = result;
         });
@@ -79,5 +83,28 @@ export class ViewsPageComponent implements OnInit {
 
   navigateToFilm(filmId: string) {
     this.navigateToService.navigateToFilm(filmId);
+  }
+
+  getFilmMeta(film: FilmDetails): string {
+    const parts = [];
+    const currentYear = new Date().getFullYear();
+
+    if (film.countries?.length) {
+      const countries = film.countries.filter(c => c && c.trim() !== '');
+      if (countries.length) {
+        parts.push(countries.join(', '));
+      }
+    }
+    if (film.director && film.director.trim() !== '') {
+      parts.push(film.director);
+    }
+    if (film.release_year &&
+        typeof film.release_year === 'number' && 
+        film.release_year >= 1800 && 
+        film.release_year <= currentYear) {
+      parts.push(film.release_year.toString());
+    }
+
+    return parts.join(', ');
   }
 }

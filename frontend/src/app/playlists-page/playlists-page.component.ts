@@ -49,7 +49,8 @@ export class PlaylistsPageComponent  implements OnInit {
 
   openCreateDialog() {
     const dialogRef = this.dialog.open(CreateSimplePlaylistDialogComponent, {
-      width: '440px',
+      width: '600px',
+      maxWidth: '90vw',
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -62,7 +63,9 @@ export class PlaylistsPageComponent  implements OnInit {
 
   openGenerateDialog() {
     const dialogRef = this.dialog.open(PlaylistGenerateDialogComponent, {
-      width: '540px',
+      width: '600px',
+      maxWidth: '100vw',
+      maxHeight: '900px',
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {

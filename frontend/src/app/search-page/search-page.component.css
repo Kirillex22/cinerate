@@ -1,12 +1,3 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background: #000;
-  font-family: Arial, sans-serif;
-  color: #fff;
-}
-
 body {
   min-height: 100vh;
 }
@@ -21,9 +12,7 @@ body {
 }
 
 h1 {
-  padding: 32px 24px;
-  font-size: 2rem;
-  margin-bottom: 32px;
+  font-size: 2.25em;
   font-weight: 700;
 }
 
@@ -32,7 +21,6 @@ h1 {
   display: flex;
   gap: 24px;
   width: 100%;
-  padding: 0px 24px;
   height: 70vh;
   align-items: flex-start;
   justify-content: center;
@@ -56,21 +44,52 @@ h1 {
 .search-bar input,
 .search-bar select {
   background: #222;
-  color: #fff;
+  color: #d9d9d9;
+  font-family: 'Montserrat';
   border: none;
   border-radius: 10px;
   padding: 8px 12px;
   margin-right: 5px;
+  font-size: 0.9em;
 }
 
-.search-bar button {
+input[type="checkbox"] {
+  accent-color: #777;
+}
+
+/* убрали стрелку "Сериал или фильм", нужно поставить "assets/select.svg" */
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.search-bar button:not(.no-style) {
   background: #333;
-  color: #fff;
+  color: #d9d9d9;
   border: none;
   border-radius: 10px;
   padding: 8px 16px;
   cursor: pointer;
-  font-size: 18px;
+  font-family: 'Montserrat';
+  font-size: 1.3em;
+  font-weight: 400;
+}
+
+.no-style {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0; /* если нужен отступ слева */
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.no-style img {
+  display: block;
 }
 
 .genres {
@@ -83,8 +102,7 @@ h1 {
 .genre-chip {
   background: #333;
   border-radius: 20px;
-  padding: 4px 10px;
-  margin-left: 5px;
+  padding: 10px 15px;
   display: inline-flex;
   align-items: center;
   font-size: 14px;
@@ -92,17 +110,15 @@ h1 {
 
 .genre-chip button {
   background: none;
-  color: #fff;
   border: none;
   margin-left: 5px;
   cursor: pointer;
-  font-size: 14px;
 }
 
 .range {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -111,22 +127,17 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 12px;
-  padding: 0 10px 0 0;
+  padding: 0 10px 20зч 0;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
 .film-card {
   position: relative;
-  aspect-ratio: 2 / 3;
+  aspect-ratio: 2/3;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
-  background: #181818;
-  transition: box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
 .film-card.already-added {
@@ -152,42 +163,37 @@ h1 {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.94em;
   transform: translateY(0);
   transition: transform 0.3s ease;
 }
 
-.film-info h3 {
+.film-name {
   margin: 0 0 10px 0;
-  font-size: 16px;
+  font-size: 1.1em;
+  font-weight: 800;
 }
 
 .film-info p {
-  margin: 5px 0;
-  font-size: 14px;
-}
-
-.alternative-name {
-  font-size: 12px;
-  color: #cccccc;
-  margin: 5px 0;
+  margin: 0.31em 0;
+  font-size: 0.9em;
+  font-weight: 400;
 }
 
 .type-label {
   display: inline-block;
   background-color: rgba(255, 255, 255, 0.2);
-  padding: 2px 8px;
+  padding: 0.125em 0.5em;
   border-radius: 4px;
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 0.9em;
+  margin-top: 0.3125em;
 }
 
 .no-results {
   text-align: center;
-  color: #888;
-  font-size: 22px;
+  font-size: 24px;
+  font-weight: bold;
   margin: 40px auto;
 }
 
@@ -238,12 +244,12 @@ h1 {
   cursor: pointer;
 }
 
-.custom-dialog-backdrop {
+.custom-dialog-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  bottom: 0;
+  right: 0;
   background: rgba(0,0,0,0.7);
   display: flex;
   align-items: center;
@@ -252,27 +258,53 @@ h1 {
 }
 
 .custom-dialog {
-  background: #181818;
-  color: #fff;
+  background: #1e1e1e;
+  color: #d9d9d9;
   border-radius: 16px;
   padding: 32px 24px 24px 24px;
-  min-width: 320px;
+  width: 500px;
+  max-height: 600px;
   box-shadow: 0 4px 32px rgba(0,0,0,0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.dialog-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4em;
+}
+.dialog-title {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 2em;
+  font-weight: 700;
+}
+.close-btn {
+  position: absolute;
+  bottom: 1.5em;
+  left: 103%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
 .season-buttons {
   display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
   gap: 12px;
-  margin: 24px 0 16px 0;
+  margin: 2em 0;
 }
 
 .season-buttons button {
-  background: #333;
-  color: #fff;
+  background: #2b2a2a;
+  color: #d9d9d9;
   border: none;
   border-radius: 8px;
   padding: 10px 18px;
@@ -282,37 +314,37 @@ h1 {
 }
 
 .season-buttons button:hover {
-  background: #444;
+  background: #323232;
 }
 
-.close-btn {
-  background: #222;
-  color: #fff;
+.buttom-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.action-btn {
+  background: #252525;
+  color: #d9d9d9;
   border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 16px;
+  width: 25em;
+  text-align: center;
+  border-radius: 15px;
+  padding: 1em 2em;
+  font-size: 1em;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 1.5em;
 }
 
-.close-btn:hover {
-  background: #333;
+.action-btn:hover {
+  background: #323232;
+  color: #dfdfdf;
 }
 
-.add-all-btn {
-  background: #1e7e34;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 8px;
-}
-
-.add-all-btn:hover {
-  background: #218838;
+button {
+  font-family: 'Montserrat';
 }
 
 .green-snackbar {

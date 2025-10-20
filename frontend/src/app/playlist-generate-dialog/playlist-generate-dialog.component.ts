@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { COUNTRY_LIST, GENRE_LIST } from '../models/config';
 
 @Component({
   selector: 'app-playlist-generate-dialog',
@@ -26,12 +27,8 @@ export class PlaylistGenerateDialogComponent {
 
   genreInput = '';
   countryInput = '';
-  genresList = [
-    'аниме', 'биография', 'боевик', 'вестерн', 'военный', 'детектив', 'документальный',
-    'драма', 'детский', 'игра', 'история', 'комедия', 'криминал', 'мелодрама', 'музыка',
-    'мультфильм', 'мюзикл', 'научный', 'приключения', 'реальное ТВ', 'семейный', 'спорт', 'триллер',
-    'ужасы', 'фантастика', 'фэнтези', 'эротика', 'юмор'
-  ];
+  genresList = GENRE_LIST;
+  countryList = COUNTRY_LIST;
 
   constructor(
     private dialogRef: MatDialogRef<PlaylistGenerateDialogComponent>,

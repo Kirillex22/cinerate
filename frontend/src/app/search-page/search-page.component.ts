@@ -5,7 +5,7 @@ import { FilmService } from '../services/film.service';
 import { Router } from '@angular/router';
 import { SearchStateService } from '../services/search-state.service';
 import { NavigateService } from '../services/navigateTo.service';
-import { GENRE_LIST } from '../models/config';
+import { COUNTRY_LIST, GENRE_LIST } from '../models/config';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -20,6 +20,7 @@ export class SearchPageComponent {
     name: '',
     person: '',
     genres: [],
+    countries: [],
     year: { lower: undefined, upper: undefined },
     kp_rating: { lower: undefined, upper: undefined },
     length: { lower: undefined, upper: undefined },
@@ -32,7 +33,9 @@ export class SearchPageComponent {
   errorMsg = '';
 
   genreInput = '';
+  countryInput = '';
   genresList = GENRE_LIST;
+  countryList = COUNTRY_LIST;
 
   hoveredFilm: any = null;
 
@@ -116,8 +119,19 @@ export class SearchPageComponent {
     }
   }
 
+  addCountry() {
+    if (this.countryInput && !this.searchParams.countries.includes(this.countryInput)) {
+      this.searchParams.countries.push(this.countryInput);
+      this.countryInput = '';
+    }
+  }
+
   removeGenre(genre: string) {
     this.searchParams.genres = this.searchParams.genres.filter((g: string) => g !== genre);
+  }
+
+  removeCountry(country: string) {
+    this.searchParams.countries = this.searchParams.countries.filter((c: string) => c !== country);
   }
 
   showFilmInfo(film: any) {

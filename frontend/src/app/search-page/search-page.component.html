@@ -14,13 +14,25 @@
       <!-- Жанры -->
       <div class="genres">
         <label>Жанр:</label>
-        <input [(ngModel)]="genreInput" list="genres-list" placeholder="Жанр" (keyup.enter)="addGenre()" />
+        <input style="width: 160px" [(ngModel)]="genreInput" list="genres-list" placeholder="Жанр" (keyup.enter)="addGenre()" />
         <datalist id="genres-list">
           <option *ngFor="let g of genresList" [value]="g"></option>
         </datalist>
-        <button (click)="addGenre()">+</button>
+        <button class="no-style" (click)="addGenre()"><img src="assets/add.svg" alt="Добавить жанр"></button>
         <span class="genre-chip" *ngFor="let genre of searchParams.genres">
-          {{ genre }} <button (click)="removeGenre(genre)">x</button>
+          {{ genre }} <button (click)="removeGenre(genre)" class="no-style"><img src="assets/delete.svg" style="height: 10px; margin-left: 5px; " alt="Удалить жанр"></button>
+        </span>
+      </div>
+
+      <div class="genres">
+        <label>Страна:</label>
+        <input style="width: 160px" [(ngModel)]="countryInput" list="country-list" placeholder="Страна" (keyup.enter)="addCountry()" />
+        <datalist id="country-list">
+          <option *ngFor="let c of countryList" [value]="c"></option>
+        </datalist>
+        <button class="no-style" (click)="addCountry()"><img src="assets/add.svg" alt="Добавить старну"></button>
+        <span class="genre-chip" *ngFor="let country of searchParams.countries">
+          {{ country }} <button (click)="removeCountry(country)" class="no-style"><img src="assets/delete.svg" style="height: 10px; margin-left: 5px; " alt="Удалить страну"></button>
         </span>
       </div>
 
@@ -39,10 +51,10 @@
       </div>
 
       <!-- Длительность -->
-      <div *class="range">
+      <div class="range" style="flex-wrap: nowrap;">
         <label>Длительность (мин):</label>
-        <input type="number" [(ngModel)]="searchParams.length.lower" placeholder="от" min="0" />
-        <input type="number" [(ngModel)]="searchParams.length.upper" placeholder="до" min="0" />
+        <input type="number" style="width: 55px;" [(ngModel)]="searchParams.length.lower" placeholder="от" min="0" />
+        <input type="number" style="width: 55px;" [(ngModel)]="searchParams.length.upper" placeholder="до" min="0" />
       </div>
 
       <!-- Возрастной рейтинг -->
@@ -53,7 +65,7 @@
       </div>
 
       <!-- Сериал/фильм -->
-      <select [(ngModel)]="searchParams.is_series">
+      <select class="custom-select" [(ngModel)]="searchParams.is_series">
         <option [ngValue]="undefined">Сериал или фильм</option>
         <option [ngValue]="true">Сериал</option>
         <option [ngValue]="false">Фильм</option>
@@ -71,18 +83,25 @@
       <button (click)="search()">Найти</button>
     </div>
 
-    <div *ngIf="dialogVisible" class="custom-dialog-backdrop">
+    <div *ngIf="dialogVisible" class="custom-dialog-overlay">
       <div class="custom-dialog">
-        <h2>Выберите сезон</h2>
+        <div class="dialog-header">
+          <h2 class="dialog-title">Выберите сезон</h2>
+          <button class="close-btn" (click)="onDialogClose()">
+            <img src="assets/close.svg" alt="Закрыть">
+          </button>
+        </div>
         <div class="season-buttons">
           <button *ngFor="let season of dialogSeasons" (click)="onSelectSeason(season)">
             {{ season }}
           </button>
         </div>
-        <button class="add-all-btn" (click)="onAddAllSeasons()">Добавить все сезоны</button>
-        <button class="close-btn" (click)="onDialogClose()">Закрыть</button>
+        <div class="buttom-actions">
+          <button class="action-btn" (click)="onAddAllSeasons()">Добавить все сезоны</button>
+        </div>
       </div>
     </div>
+
 
     <div class="films-grid" *ngIf="!errorMsg && films.length > 0">
       <div class="film-card"
@@ -93,22 +112,23 @@
            (mouseleave)="hideFilmInfo()">
         <img [src]="film.poster_link" [alt]="film.name" class="film-poster" />
         <div class="film-info" *ngIf="hoveredFilm === film">
-          <h3>{{ film.name }}</h3>
+          <div class="film-name">
+            {{ film.name }}
+            <span style="font-weight: 400; color: #9d9d9d;">{{ film.release_year }}</span>
+          </div>
+          
           <p *ngIf="film.alternative_name" class="alternative-name">{{ film.alternative_name }}</p>
-          <p>Год: {{ film.release_year }}</p>
-          <p>Страна: {{ film.countries?.join(', ') }}</p>
-          <ng-container *ngIf="film.time_minutes !== null">
-            <p>Продолжительность: {{ film.time_minutes }} мин.</p>
+          
+          <p>{{ film.countries.join(', ') }}</p>
+          
+          <ng-container *ngIf="film.time_minutes != null && film.time_minutes !== 0; else serialCard">
+            <p>{{ film.time_minutes }} мин</p>
             <p class="type-label">Фильм</p>
           </ng-container>
-          <ng-container *ngIf="film.time_minutes === null">
-            <p>Сезон: {{ film.season }}</p>
+          
+          <ng-template #serialCard>
             <p class="type-label">Сериал</p>
-          </ng-container>
-          <p>Жанры: {{ film.genres?.join(', ') }}</p>
-          <p>Режиссёр: {{ film.director }}</p>
-          <p>Возрастной рейтинг: {{ film.age_rating }}+</p>
-          <p>{{ film.is_watched ? 'Просмотрено' : 'Не просмотрено' }}</p>
+          </ng-template>
         </div>
       </div>
     </div>

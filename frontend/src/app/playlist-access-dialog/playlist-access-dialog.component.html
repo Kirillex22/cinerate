@@ -1,73 +1,73 @@
-<div class="dialog-container">
-  <button class="close-btn" (click)="closeDialog()">&times;</button>
-  <h2 class="dialog-title">Управление доступом</h2>
-  <div *ngIf="loading" class="loading-text">Загрузка...</div>
-  <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
-  <div *ngIf="!loading && playlist">
-    <!-- 1. Название плейлиста и описание-->
-    <div class="block">
-      <h3>Название плейлиста</h3>
-      <div>
-        <input class = "input" type="text" [(ngModel)]="name" />
-        <button class = "button_edit" (click)="setName()">Изменить</button>
-      </div>
+<div сlass="dialog-header">
+  <h2 class="dialog-title">Настройки</h2>
+  <button class="close-btn" (click)="closeDialog()"><img src="assets/close.svg" alt="Закрыть"></button>
+</div>
+<div *ngIf="loading" class="loading-text">Загрузка...</div>
+<div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+<div *ngIf="!loading && playlist">
+  <!-- 1. Название плейлиста и описание-->
+  <div class="block">
+    <h3>Название плейлиста</h3>
+    <div style="display: flex; justify-content: space-between;">
+      <input class = "input" type="text" [(ngModel)]="name" />
+      <button class = "button_edit" (click)="setName()"><img src="assets/done.svg" alt="Закончить редактирование"></button>
     </div>
-    <div class="block">
-      <h3>Описание</h3>
-      <div>
-        <textarea class = "input"  type="text" [(ngModel)]="description"></textarea>
-        <button class = "button_edit" (click)="setDescription()">Изменить</button>
-      </div>
+  </div>
+  <div class="block">
+    <h3>Описание</h3>
+    <div style="display: flex; justify-content: space-between;">
+      <textarea class = "input"  type="text" [(ngModel)]="description"></textarea>
+      <button class = "button_edit" (click)="setDescription()"><img src="assets/done.svg" alt="Закончить редактирование"></button>
     </div>
-    <!-- 2. Публичность -->
-    <div class="block">
-      <h3>Тип плейлиста</h3>
-      <div class="publicity-switch">
-        <button [class.active]="publicity" (click)="setPublicity(true)" [disabled]="publicityLoading">Публичный</button>
-        <button [class.active]="!publicity" (click)="setPublicity(false)" [disabled]="publicityLoading">Приватный</button>
-      </div>
+  </div>
+  <!-- 2. Публичность -->
+  <div class="block">
+    <h3>Тип плейлиста</h3>
+    <div class="publicity-switch">
+      <button [class.active]="publicity" (click)="setPublicity(true)" [disabled]="publicityLoading">Публичный</button>
+      <button [class.active]="!publicity" (click)="setPublicity(false)" [disabled]="publicityLoading">Приватный</button>
     </div>
-    <!-- 3. Создатель -->
-    <div class="block">
-      <h3>Создатель</h3>
-      <div class="user-card" *ngIf="creator" (click)="navigateToProfile(creator.userid)">
-        <img [src]="creator.avatar" class="avatar" [alt]="creator.username">
-        <span class="username">{{ creator.username }}</span>
-      </div>
+  </div>
+  <!-- 3. Создатель -->
+  <div class="block">
+    <h3>Создатель</h3>
+    <div class="user-card" *ngIf="creator" (click)="navigateToProfile(creator.userid)">
+      <img [src]="creator.avatar" class="avatar" [alt]="creator.username">
+      <span class="username">{{ creator.username }}</span>
     </div>
-    <!-- 4. Коллабораторы -->
-    <div class="block">
-      <h3>Коллабораторы</h3>
-      <div class="collaborators-list">
-        <ng-container *ngFor="let user of collaborators">
-          <div class="user-card" [class.edit-mode]="editCollaborators" (click)="!editCollaborators && navigateToProfile(user.userid)">
-            <img [src]="user.avatar" class="avatar" [alt]="user.username">
-            <span class="username">{{ user.username }}</span>
-            <button *ngIf="editCollaborators" class="remove-collab-btn" (click)="removeCollaborator(user)">✖</button>
-          </div>
-        </ng-container>
-      </div>
-      <div class="collab-actions" *ngIf="!editCollaborators && !addCollaborators">
-        <button (click)="startEditCollaborators()">Удалить коллабораторов</button>
-        <button (click)="startAddCollaborators()">Добавить коллабораторов</button>
-      </div>
-      <div *ngIf="editCollaborators" class="edit-collab-actions">
-        <button (click)="finishEditCollaborators()">Закончить редактирование</button>
-      </div>
-      <div *ngIf="addCollaborators" class="add-collab-block">
-        <input [(ngModel)]="searchQuery" placeholder="Имя пользователя..." (keyup.enter)="searchUsers()">
-        <button (click)="searchUsers()" [disabled]="searchLoading">Поиск</button>
-        <button (click)="cancelAddCollaborators()">Отмена</button>
-        <div *ngIf="searchLoading" class="loading-text">Поиск...</div>
-        <div *ngIf="searchError" class="error-msg">{{ searchError }}</div>
-        <div class="search-results">
-          <div class="user-card" *ngFor="let user of searchResults">
-            <img [src]="user.avatar" class="avatar" [alt]="user.username">
-            <span class="username">{{ user.username }}</span>
-            <button class="add-collab-btn" (click)="addCollaborator(user)">+</button>
-          </div>
+  </div>
+  <!-- 4. Коллабораторы -->
+  <div class="block">
+    <h3>Коллабораторы</h3>
+    <div class="collaborators-list">
+      <ng-container *ngFor="let user of collaborators">
+        <div class="user-card" [class.edit-mode]="editCollaborators" (click)="!editCollaborators && navigateToProfile(user.userid)">
+          <img [src]="user.avatar" class="avatar" [alt]="user.username">
+          <span class="username">{{ user.username }}</span>
+          <button *ngIf="editCollaborators" class="remove-collab-btn" (click)="removeCollaborator(user)">✖</button>
+        </div>
+      </ng-container>
+    </div>
+    <div class="collab-actions" *ngIf="!editCollaborators && !addCollaborators">
+      <button (click)="startEditCollaborators()">Удалить коллабораторов</button>
+      <button (click)="startAddCollaborators()">Добавить коллабораторов</button>
+    </div>
+    <div *ngIf="editCollaborators" class="edit-collab-actions">
+      <button (click)="finishEditCollaborators()">Закончить редактирование</button>
+    </div>
+    <div *ngIf="addCollaborators" class="add-collab-block">
+      <input [(ngModel)]="searchQuery" placeholder="Имя пользователя..." (keyup.enter)="searchUsers()">
+      <button (click)="searchUsers()" [disabled]="searchLoading">Поиск</button>
+      <button (click)="cancelAddCollaborators()">Отмена</button>
+      <div *ngIf="searchLoading" class="loading-text">Поиск...</div>
+      <div *ngIf="searchError" class="error-msg">{{ searchError }}</div>
+      <div class="search-results">
+        <div class="user-card" *ngFor="let user of searchResults">
+          <img [src]="user.avatar" class="avatar" [alt]="user.username">
+          <span class="username">{{ user.username }}</span>
+          <button class="add-collab-btn" (click)="addCollaborator(user)">+</button>
         </div>
       </div>
     </div>
   </div>
-</div> 
+</div>

@@ -1,114 +1,169 @@
 <div class="film-details-container" *ngIf="film$ | async as film">
   <!-- Первый блок -->
   <div class="main-info-block">
-    <div class="poster">
-      <img [src]="film.poster_link" [alt]="film.name">
-    </div>
-
+    <img class="poster" [src]="film.poster_link" [alt]="film.name">
     <div class="info">
-      <h1>{{ film.name }}</h1>
+      <h1>
+        {{ film.name }}
+        <button class="add-button" (click)="addToWatchList(film)">
+          <ng-container *ngIf="already_added; else addPlannedIcon">
+            <img src="assets/plane_active.svg" alt="Удалить из списков">
+          </ng-container>
+          <ng-template #addPlannedIcon>
+            <img src="assets/plane.svg" alt="Буду смотреть">
+          </ng-template>
+        </button>
+      </h1>
       <h2>{{ film.alternative_name }}</h2>
 
-      <div class="basic-info">
-        <p>Год: {{ film.release_year }}</p>
-        <p>Страна: {{ film.countries.join(', ') }}</p>
-        <p>Жанр: {{ film.genres.join(', ') }}</p>
-        <p>Слоган: {{ film.slogan }}</p>
-        <p>Режиссер: {{ film.director }}</p>
-        <p>
-          {{ film.time_minutes !== null ? `Продолжительность: ${film.time_minutes} мин.` : `Сезон: ${film.season}` }}
-        </p>
-        <p>Возрастной рейтинг: {{ film.age_rating }}+</p>
-      </div>
+      <table class="basic-info">
+        <tbody>
+          <tr>
+            <td>Год</td>
+            <td>{{ film.release_year }}</td>
+          </tr>
+          <tr>
+            <td>Страна</td>
+            <td>{{ film.countries.join(', ') }}</td>
+          </tr>
+          <tr>
+            <td>Жанр</td>
+            <td>{{ film.genres.join(', ') }}</td>
+          </tr>
+          <tr>
+            <td>Слоган</td>
+            <td>{{ film.slogan !== null ? `${film.slogan}` : `—` }}</td>
+          </tr>
+          <tr>
+            <td>Режиссер</td>
+            <td>{{ film.director !== null && film.director.trim() !== '' ? `${film.director}` : `—` }}</td>
+          </tr>
+          <tr>
+            <td>Возрастной рейтинг</td>
+            <td>{{ film.age_rating !== null ? `${film.age_rating}+` : `—` }}</td>
+          </tr>
+          <tr>
+            <td>{{ film.time_minutes !== null ? `Продолжительность` : `Сезон` }}</td>
+            <td>{{ film.time_minutes !== null ? `${film.time_minutes} мин` : `${film.season}`}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-      <div class="ratings">
-        <div class="rating-item">
-          <span>Кинопоиск</span>
-          <span class="rating-value">{{ film.ratings.kp }}</span>
+      <div class="rates">
+        <div class="ratings">
+          <div class="rating-item">
+            <span class="rating-value">{{ film.ratings.kp !== 0 ? `${film.ratings.kp | number:'1.1-1'}` : `-` }}</span>
+            <span class="rating-max">/10.0</span>
+            <div class="rating-label">Кинопоиск</div>
+          </div>
+          <div class="rating-item">
+            <span class="rating-value">{{ film.ratings.imdb !== 0 ? `${film.ratings.imdb | number:'1.1-1'}` : `-` }}</span>
+            <span class="rating-max">/10.0</span>
+            <div class="rating-label">IMDb</div>
+          </div>
+          <div class="rating-item">
+            <span class="rating-value">{{ film.ratings.filmCritics !== 0 ? `${film.ratings.filmCritics | number:'1.1-1'}` : `-` }}</span>
+            <span class="rating-max">/10.0</span>
+            <div class="rating-label">Film Critics</div>
+          </div>
         </div>
-        <div class="rating-item">
-          <span>IMDb</span>
-          <span class="rating-value">{{ film.ratings.imdb }}</span>
-        </div>
-      </div>
 
-      <div class="user-rating-block" *ngIf="is_watched">
-        <span class="user-rating-title">Ваша оценка</span>
-        <div class="rating-characteristics">
+        <div class="rating-characteristics" *ngIf="is_watched">
           <div class="rating-char-item" *ngFor="let char of characteristics">
             <span class="char-label">{{ char.label }}</span>
-            <span class="rating-value">{{ getUserRatingWord(film, char.key) }}</span>
+            <span class="rate-value">{{ getUserRatingWord(film, char.key) }}</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="trailers">
-        <h3>Трейлеры:</h3>
-        <div class="trailer-links">
+    <div class="sidebar">
+      <div class="action-buttons">
+        <button class="add-button" (click)="openPlaylistDialog(film)">
+          <img src="assets/add_to_playlist.svg" alt="Добавить в плейлист">
+        </button>
+        <button class="watch-button" *ngIf="already_added" (click)="toggleWatched(film)">
+          <ng-container *ngIf="is_watched; else markWatchedIcon">
+            <img src="assets/view_active.svg" alt="Удалить из просмотренных">
+          </ng-container>
+          <ng-template #markWatchedIcon>
+            <img src="assets/view.svg" alt="Просмотрено">
+          </ng-template>
+        </button>
+      </div>
+      <div *ngIf="is_watched == false; else trailers">
+        <div class="trailer-links" style="margin-bottom: 0ю7em;">
           <a *ngFor="let trailer of film.trailers; let i = index"
-             [href]="trailer"
-             target="_blank">
+            [href]="trailer"
+            target="_blank">
             Трейлер {{ i + 1 }}
           </a>
         </div>
-      </div>
+      </div> 
+      <ng-template #trailers>
+        <div class="trailer-links">
+          <a *ngFor="let trailer of film.trailers; let i = index"
+            [href]="trailer"
+            target="_blank">
+            Трейлер {{ i + 1 }}
+          </a>
+        </div>
+      </ng-template>
     </div>
-
-    <div class="action-buttons">
-      <button class="add-button" (click)="openPlaylistDialog(film)">Добавить в плейлист</button>
-      <button class="add-button" (click)="addToWatchList(film)">
-        {{ already_added ? 'Удалить из списков' : 'Добавить в запаланировано' }}
-      </button>
-      <button class="watch-button" *ngIf="already_added" (click)="toggleWatched(film)">
-        {{ is_watched ? 'Убрать из просмотренных' : 'Отметить просмотренным' }}
-      </button>
-    </div>
-  </div>
+  </div> 
 
   <!-- Второй блок -->
   <div class="description-block">
-    <h3>Описание</h3>
     <p>{{ film.description }}</p>
   </div>
+  
 
   <!-- Третий блок -->
-  <div class="persons-block">
-    <div class="persons-section">
-      <h3>Режиссеры</h3>
-      <div class="persons-list">
-        <div class="person-card" *ngFor="let person of getPersonsByProfession(film, 'director')">
-          <img [src]="person.photo" [alt]="person.name">
-          <p>{{ person.name }}</p>
-        </div>
-      </div>
-    </div>
+  <div class="list-block">
+    <ng-container *ngFor="let id of scrollListIds">
+      <div class="list-section" *ngIf="(id !== 'episode' && getPersonsByProfession(film, id).length > 0) || (film.episodes && film.episodes.length > 0)">
+        <h3>{{ id === 'director' ? 'Режиссеры' : id === 'actor' ? 'Актеры' : 'Эпизоды' }}</h3>
+        
+        <div class="scroll-list">
+          <button
+            class="scroll-button"
+            (click)="scrollLeft(id)"
+            [disabled]="!canScrollLeft(id)"
+            *ngIf="arrowVisibility[id]"
+          > 
+            <img src="assets/left.svg" alt="Влево"> 
+          </button>
 
-    <div class="persons-section">
-      <h3>Актеры</h3>
-      <div class="persons-list">
-        <div class="person-card" *ngFor="let person of getPersonsByProfession(film, 'actor')">
-          <img [src]="person.photo" [alt]="person.name">
-          <p>{{ person.name }}</p>
-        </div>
-      </div>
-    </div>
-
-    <ng-container *ngIf="film.episodes !== null && film.episodes.length > 0">
-      <div class="episodes-section">
-        <h3>Эпизоды</h3>
-        <div class="episodes-list">
-          <div class="episode-card" *ngFor="let episode of getEpisodes(film)">
-            <img [src]="episode.preview_link" [alt]="episode.name" />
-            <p>Номер: {{ episode.number }}</p>
-            <p>Название: {{ episode.name }}</p>
-            <div class="episode-description-overlay">
-              {{ episode.description }}<br />
-              <span>Дата выхода: {{ episode.air_date | date:'dd.MM.yyyy' }}</span>
-            </div>
+          <div class="listForScroll" #scrollContainer [attr.data-id]="id" (scroll)="onScroll(id)">
+            <ng-container *ngIf="id === 'episode'; else personsList">
+              <div class="episode-card" *ngFor="let episode of getEpisodes(film)">
+                <img [src]="episode.preview_link" [alt]="episode.name" />
+                <p>{{ episode.number }}. {{ episode.name }}</p>
+                <div class="episode-description-overlay">
+                  <p>{{ episode.description }}</p>
+                  <p style="text-align: center;">{{ episode.air_date | date:'dd.MM.yyyy' }}</p> <!-- Дата выхода: -->
+                </div>
+              </div>
+            </ng-container>
           </div>
+
+          <ng-template #personsList>
+            <div class="person-card" *ngFor="let person of getPersonsByProfession(film, id)">
+              <img [src]="person.photo" [alt]="person.name">
+              <p>{{ person.name }}</p>
+            </div>
+          </ng-template>
+          
+          <button 
+            class="scroll-button"
+            (click)="scrollRight(id)"
+            [disabled]="!canScrollRight(id)"
+            *ngIf="arrowVisibility[id]"
+          >
+            <img src="assets/right.svg" alt="Вправо">
+          </button>
         </div>
       </div>
     </ng-container>
-
   </div>
 </div>

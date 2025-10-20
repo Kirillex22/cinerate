@@ -1,6 +1,9 @@
 <div class="dialog-container">
-  <button class="close-btn" (click)="closeDialog(false)">&times;</button>
-  <h2 class="dialog-title">Изменить профиль</h2>
+  <div сlass="dialog-header">
+    <h2 class="dialog-title">Изменить профиль</h2>
+    <button class="close-btn" (click)="closeDialog(false)"><img src="assets/close.svg" alt="Закрыть"></button>
+  </div>
+
   <div *ngIf="loading" class="loading-text">Загрузка...</div>
   <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
   <form *ngIf="!loading" (ngSubmit)="save()">
@@ -35,9 +38,8 @@
       <label>Ссылка на аватар</label>
       <input class="input" type="text" [(ngModel)]="form.avatar" name="avatar" />
     </div>
-    <div class="collab-actions">
-      <button type="submit" class="button_edit" [disabled]="saving">Сохранить изменения</button>
-      <button type="button" (click)="closeDialog(false)">Отмена</button>
+    <div class="collab-actions" style="display: flex; justify-content: center; align-items: center;">
+      <button type="submit" class="action-btn" [disabled]="saving">Сохранить изменения</button>
     </div>
   </form>
 </div>

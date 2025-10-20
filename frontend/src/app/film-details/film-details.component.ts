@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ElementRef, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilmService } from '../services/film.service';
 import { FilmDetails, FilmDetailsResponse, UserRating } from '../models/film-details.interface';
@@ -16,7 +16,8 @@ import { PlaylistSelectDialogComponent } from '../playlist-select-dialog/playlis
   templateUrl: './film-details.component.html',
   styleUrls: ['./film-details.component.css']
 })
-export class FilmDetailsComponent {
+
+export class FilmDetailsComponent implements AfterViewInit {
   private route = inject(ActivatedRoute);
   private filmService = inject(FilmService);
   private dialog = inject(MatDialog);
@@ -63,11 +64,14 @@ export class FilmDetailsComponent {
         this.is_watched = true;
 
         const dialogRef = this.dialog.open(RatingDialogComponent, {
+          width: '900px',
+          maxWidth: '90vw',
           data: { film, ratings: film.user_rating }
         });
 
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
+            console.log(result)
             this.filmService.rateFilm(film.filmid, result).subscribe(() => {
               film.user_rating = result;
             });
@@ -100,7 +104,8 @@ export class FilmDetailsComponent {
 
   openPlaylistDialog(film: FilmDetails) {
     this.dialog.open(PlaylistSelectDialogComponent, {
-      width: '600px',
+      width: '900px',
+      maxWidth: '900vw',
       data: { film }
     });
   }
@@ -116,6 +121,96 @@ export class FilmDetailsComponent {
   getUserRatingWord(film: FilmDetails, key: string): string {
     const k = key as keyof UserRating;
     const value = film?.user_rating?.[k];
-    return value ? this.ratingWords[value - 1] : '-';
+    return value ? this.ratingWords[value - 1] : '—';
   }
+
+  @ViewChildren('scrollContainer') scrollContainers!: QueryList<ElementRef<HTMLDivElement>>;
+
+  arrowVisibility: Record<string, boolean> = {};
+
+  scrollListIds = ['director', 'actor', 'episode'];
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollListIds.forEach(id => {
+        this.updateArrows(id);
+      });
+    }, 300);
+  }
+
+  // Элемент прокрутки по id
+  private getScrollElement(id: string): HTMLDivElement | undefined {
+    // Каждому контейнеру прокрутки назначен #scrollContainer и data-id
+    const containerRef = this.scrollContainers.toArray()
+      .find(c => c.nativeElement.getAttribute('data-id') === id);
+    return containerRef?.nativeElement;
+  }
+
+  private getCardWidth(id: string): number {
+    const el = this.getScrollElement(id);
+    if (!el) return 0;
+
+    let cardSelector = id == 'episode' ? '.episode-card' : '.person-card';
+    const card = el.querySelector(cardSelector);
+    if (!card) return 0;
+
+    const cardWidth = (card as HTMLElement).offsetWidth;
+    const style = getComputedStyle(el);
+    const gap = parseInt(style.gap || '0', 10);
+
+    return cardWidth + gap;
+  }
+
+  // Видимость стрелок для конкретного списка
+  updateArrows(id: string) {
+    const el = this.getScrollElement(id);
+    if (!el) return;
+
+    let cardSelector = id == 'episode' ? '.episode-card' : '.person-card';
+    const cardsCount = el.querySelectorAll(cardSelector).length;
+
+    const needScroll  = id == 'episode' ? 3 : 8;
+
+    // Если карточек мало — стрелки скрываем, иначе — стрелки всегда видны
+    this.arrowVisibility[id] = cardsCount > needScroll;
+  }
+
+  // Обработчик прокрутки
+  onScroll(id: string) {
+    this.updateArrows(id);
+  }
+
+  // Прокрутка влево
+  scrollLeft(id: string) {
+    const el = this.getScrollElement(id);
+    if (!el) return;
+
+    const scrollCount = id == 'episode' ? 3 : 7;
+
+    const scrollAmount = this.getCardWidth(id) * scrollCount;
+    el.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  }
+
+  // Прокрутка вправо
+  scrollRight(id: string) {
+    const el = this.getScrollElement(id);
+    if (!el) return;
+
+    const scrollCount = id == 'episode' ? 3 : 7;
+
+    const scrollAmount = this.getCardWidth(id) * scrollCount;
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+
+  canScrollLeft(id: string): boolean {
+    const el = this.getScrollElement(id);
+    return el ? el.scrollLeft > 0 : false;
+  }
+
+  canScrollRight(id: string): boolean {
+    const el = this.getScrollElement(id);
+    if (!el) return false;
+    return el.scrollLeft + el.clientWidth < el.scrollWidth;
+  }
+  
 }

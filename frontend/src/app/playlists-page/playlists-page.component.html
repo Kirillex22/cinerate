@@ -2,9 +2,13 @@
     <div class="playlists-header">
       <h1>Плейлисты</h1>
 
-      <div class="action-buttons" style="display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 24px;">
-        <button class="action-btn" (click)="openCreateDialog()">Создать плейлист</button>
-        <button class="action-btn" (click)="openGenerateDialog()">Сгенерировать плейлист</button>
+      <div class="action-buttons">
+        <button class="action-btn" (click)="openCreateDialog()">
+          <img src="assets/create_playlist.svg" alt="Создать плейлист">
+        </button>
+        <button class="action-btn" (click)="openGenerateDialog()">
+          <img src="assets/generat.svg" alt="Сгенерировать плейлист">
+        </button>
       </div>
     </div>
     
@@ -25,8 +29,6 @@
         
         <div class="playlist-info">
           <h3>{{ playlist.name }}</h3>
-          <p *ngIf="playlist.description !== ''">Описание: {{ playlist.description }}</p>
-          <p *ngIf="playlist.description === ''">Описание отсутствует</p>
           <!-- <p>Кол-во классов: {{ playlist.additions_count }}</p> -->
         </div>
       </div>

@@ -12,7 +12,7 @@
       </div>
       <div class="info-block">
         <div class="film-title">{{ film.name }}</div>
-        <div class="film-meta">{{ film.countries.join(', ') }}, {{ film.director }}, {{ film.release_year }}</div>
+        <div class="film-meta">{{ getFilmMeta(film) }}</div>
         <div class="ratings-table">
           <div class="rating-row" *ngFor="let char of characteristics">
             <span class="char-label">{{ char.label }}</span>
@@ -22,9 +22,9 @@
           </div>
         </div>
       </div>
-      <div class="actions-block">
-        <button class="edit-rating-btn" (click)="openRatingDialog(film)">
-          <span class="material-icons">Изменить оценку</span>
+      <div class="action-buttons">
+        <button class="edit-button" (click)="openRatingDialog(film)">
+          <img src="assets/edit.svg" alt="Редактировать оценку">
         </button>
       </div>
     </div>

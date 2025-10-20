@@ -19,7 +19,7 @@ export class RatingDialogComponent {
     { key: 'storyline', label: 'Сюжет' },
   ];
   ratingWords = ['Плохо', 'Нормально', 'Хорошо', 'Отлично'];
-  ratings: { [key: string]: number } = {};
+  ratings: { [key: string]: number | null } = {};
 
   constructor(
     public dialogRef: MatDialogRef<RatingDialogComponent>,
@@ -28,7 +28,7 @@ export class RatingDialogComponent {
     if (data && data.ratings) {
       this.ratings = {};
       for (const key of Object.keys(data.ratings)) {
-        this.ratings[key] = Number(data.ratings[key]);
+        this.ratings[key] = data.ratings[key];
       }
     }
   }

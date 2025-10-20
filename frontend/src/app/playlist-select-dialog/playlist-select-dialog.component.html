@@ -1,28 +1,29 @@
-<div class="dialog-container">
-  <button class="close-btn" (click)="onCancel()">&times;</button>
+<div сlass="dialog-header">
   <h2 class="dialog-title">Выберите плейлист</h2>
-  <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
-  <div *ngIf="loading" class="loading-text">Загрузка...</div>
-  <div class="playlists-grid" *ngIf="!loading">
-    <div class="playlist-card"
-      *ngFor="let playlist of playlists; let i = index"
-      (click)="addToPlaylist(playlist)"
-      tabindex="0"
-      role="button"
-      [attr.aria-label]="'Выбрать плейлист ' + playlist.name">
-      <div class="playlist-poster"
-           [style.background]="playlistGradients[i]"
-           [attr.aria-label]="playlist.name"
-           role="img">
-      </div>
-      <div class="playlist-info">
-        <h3>{{ playlist.name }}</h3>
-        <p>Кол-во классов: {{ playlist.additions_count }}</p>
-      </div>
+  <button class="close-btn" (click)="onCancel()"><img src="assets/close.svg" alt="Закрыть"></button>
+</div>
+
+<div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+<div *ngIf="loading" class="loading-text">Загрузка...</div>
+<div class="playlists-grid" *ngIf="!loading">
+  <div class="playlist-card"
+    *ngFor="let playlist of playlists; let i = index"
+    (click)="addToPlaylist(playlist)"
+    tabindex="0"
+    role="button"
+    [attr.aria-label]="'Выбрать плейлист ' + playlist.name">
+    
+    <div class="playlist-poster"
+      [style.background]="playlistGradients[i]"
+      [attr.aria-label]="playlist.name"
+      role="img">
+    </div>
+    
+    <div class="playlist-info">
+      <h3>{{ playlist.name }}</h3>
     </div>
   </div>
-  <div class="action-buttons">
-    <button (click)="openCreateDialog()">Создать простой плейлист</button>
-    <button (click)="onCancel()">Отмена</button>
-  </div>
+</div>
+<div style="display: flex; justify-content: center; align-items: center;">
+  <button class="create-btn" (click)="openCreateDialog()">Создать простой плейлист</button>
 </div>

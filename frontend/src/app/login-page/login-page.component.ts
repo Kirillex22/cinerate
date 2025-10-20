@@ -22,54 +22,26 @@ export class LoginPageComponent {
   currentUserId = ''
 
   constructor(
-    private auth: AuthService,
+    private auth: AuthService, 
     private userService: UserService,
     private userStateService: UserStateService,
-    private navigateToService: NavigateService) { }
+    private navigateToService: NavigateService) {}
 
   onLogin() {
     this.error = '';
     this.loading = true;
     this.auth.login(this.login, this.password).subscribe({
       next: (token) => {
-        console.log('Шаг 1: Логин успешен, получен токен.', token);
-        this.auth.setToken(token.access_token || token); // Убедитесь, что извлекаете токен правильно
-
-        this.userService.getCurrentUser().subscribe({
-          next: user => {
-            console.log('Шаг 2: Получен текущий пользователь.', user);
-            // ПРОВЕРКА: Существует ли user.userid?
-            if (!user || !user.userid) {
-              console.error('КРИТИЧЕСКАЯ ОШИБКА: Ответ от getCurrentUser() не содержит userid!');
-              this.error = 'Ошибка получения данных пользователя.';
-              this.loading = false;
-              return; // Прерываем выполнение
-            }
-            this.currentUserId = user.userid;
-
-            this.userService.getUserById(this.currentUserId).subscribe({
-              next: userDetails => {
-                console.log('Шаг 3: Получены детали пользователя.', userDetails);
-                this.userStateService.setCurrentUser(this.currentUserId, userDetails.username);
-                console.log('Шаг 4: Пользователь сохранен, вызываю навигацию...');
-                this.navigateToService.navigateToPlane();
-              },
-              error: err => {
-                console.error('ОШИБКА на getUserById:', err);
-                this.error = 'Не удалось загрузить детали профиля.';
-                this.loading = false;
-              }
-            });
-          },
-          error: err => {
-            console.error('ОШИБКА на getCurrentUser:', err);
-            this.error = 'Не удалось получить данные текущего пользователя.';
-            this.loading = false;
-          }
+        this.auth.setToken(token);
+        this.userService.getCurrentUser().subscribe(user => {
+          this.currentUserId = user.userid;
+          this.userService.getUserById(this.currentUserId).subscribe(userDetails => {
+            this.userStateService.setCurrentUser(this.currentUserId, userDetails.username);
+            this.navigateToService.navigateToPlane();
+          });
         });
       },
       error: (err) => {
-        console.error('ОШИБКА на auth.login:', err);
         this.error = 'Неверный логин или пароль';
         this.loading = false;
       }
@@ -79,4 +51,4 @@ export class LoginPageComponent {
   goToRegister() {
     this.navigateToService.navigateToRegister();
   }
-}
+} 

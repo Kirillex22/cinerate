@@ -1,7 +1,14 @@
 <nav>
-  <a routerLink="/">Главная</a>
-  <a routerLink="/playlists">Плейлисты</a>
-  <a routerLink="/views">Просмотренные</a>
-  <a routerLink="/search">Поиск</a>
-  <a *ngIf="currentUserId" [routerLink]="['/profile', currentUserId]">{{ currentUserName }}</a>
-</nav> 
+  <div>
+    <a routerLink="/plane"><img style="vertical-align:top; width:35px; height:35px; margin-right: 10px;" src="assets/logo.svg">CINERATE</a> <!-- заглушка, можно Профиль -->
+  </div>
+  <div class="menu">
+    <a routerLink="/plane" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Главная</a>
+    <a routerLink="/playlists" routerLinkActive="active">Плейлисты</a>
+    <a routerLink="/views" routerLinkActive="active">Просмотры</a>
+    <a routerLink="/search" routerLinkActive="active">Поиск</a>
+  </div>
+  <div>
+    <a *ngIf="currentUserId" [routerLink]="['/profile', currentUserId]">{{ currentUserName }}<img style="vertical-align:top; width:35px; height:35px; margin-left: 10px;" src="assets/profile.svg"></a> <!-- заглушка, можно Профиль -->
+  </div>  
+</nav>
