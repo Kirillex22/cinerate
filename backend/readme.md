@@ -40,8 +40,8 @@ backend/
 
 1.  **Клонируйте репозиторий и перейдите в папку `backend`:**
     ```bash
-    git clone https://github.com/Kirillex22/cinerate-api.git
-    cd cinerate-api
+    git clone https://github.com/Kirillex22/cinerate.git
+    cd cinerate/backend
     ```
 
 2.  **Создайте и активируйте виртуальное окружение:**
